@@ -1,16 +1,24 @@
 <template>
   <div>
-    <Button :disabled="false" variant="primary" />
-    <Button :disabled="true" variant="secondary" />
-    <Button :disabled="false" variant="delete" />
-    <OutlineBtn :disabled="true" />
-    <FormInput placeholder="" type="" id="name" />
+    <component :is="activeLayouts">
+      <RouterView />
+    </component>
   </div>
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/Base/Button.vue'
-import OutlineBtn from '@/components/Base/OutlineBtn.vue'
-import FormInput from '@/components/Form/Input.vue'
+import Default from '@/layouts/Default.vue'
+import Auth from '@/layouts/Auth.vue'
 
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const layouts = {
+  auth: Auth,
+  default: Default
+}
+
+const activeLayouts = computed(() => layouts[route.meta.layout ?? 'default'])
 </script>

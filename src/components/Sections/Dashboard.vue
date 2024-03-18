@@ -1,0 +1,132 @@
+<template>
+  <div class="container mt-12">
+    <!-- totals -->
+    <div class="flex-y-center justify-between">
+      <!-- totals item -->
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+        <span class="w-12 h-full rounded-xl flex-center bg-[#4C6FFF]/10"></span>
+        <p class="text-xs text-[#7A7A9D] font-rubik">Jami to‘langan summa</p>
+        <h4 class="text-xl text-blue-700 font-bold">{{ totals?.total_paid }} <span class="text-gray ml-[6px]">UZS</span></h4>
+      </div>
+
+      <!-- totals item -->
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+        <span class="w-12 h-full rounded-xl flex-center bg-[#EDC700]/10"></span>
+        <p class="text-xs text-[#7A7A9D] font-rubik">Jami so‘ralgan summa</p>
+        <h4 class="text-xl text-blue-700 font-bold">{{ totals?.total_need }} <span class="text-gray ml-[6px]">UZS</span></h4>
+      </div>
+
+      <!-- totals item -->
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+        <span class="w-12 h-full rounded-xl flex-center bg-[#ED7200]/10"></span>
+        <p class="text-xs text-[#7A7A9D] font-rubik">To‘lanishi kerak summa</p>
+        <h4 class="text-xl text-blue-700 font-bold">{{ totals?.total_must_pay }} <span class="text-gray ml-[6px]">UZS</span></h4>
+      </div>
+    </div>
+
+    <!-- chart -->
+    <div class="flex flex-col bg-white p-6 rounded-lg mt-[28px]">
+      <h2 class="text-2xl text-blue-700 font-bold">Homiylar va talabalar soni</h2>
+      <div class="flex-y-center gap-5 mt-2">
+        <span
+          class="flex-center gap-2 text-xs text-[#7A7A9D] before:w-2 before:h-2 before:rounded-full before:bg-blue">Homiylar
+        </span>
+        <span
+          class="flex-center gap-2 text-xs text-[#7A7A9D] before:w-2 before:h-2 before:rounded-full before:bg-red">Talabalar
+        </span>
+      </div>
+      <apexchart height="282px"  type="line" :options="options" :series="series"></apexchart>
+    </div>
+
+  </div>
+</template>
+
+<script setup lang="ts">
+
+import { useDashboardStore } from '@/stores/dashboard'
+import { computed } from 'vue'
+
+const dashboardStore = useDashboardStore()
+const totals = computed(() => dashboardStore.dashboardTotals)
+
+dashboardStore.getDashboardTotals()
+
+// chart
+const series = [
+  {
+    name: 'Homiylar',
+    data: [31, 40, 28, 51, 42, 109, 100],
+  },
+  {
+    name: 'Talabalar',
+    data: [11, 32, 45, 32, 34, 52, 41]
+  },
+]
+const options = {
+  chart: {
+    type: 'area',
+    toolbar: { show: false },
+  },
+  legend: { show: false },
+  stroke: { curve: 'smooth' },
+  colors: ['#4C6FFF', '#FF92AE'],
+  tooltip: {
+    styles: {
+      fontSize: '20px',
+      fontWeight: 500,
+    },
+  },
+  xaxis: {
+    categories: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr']
+  },
+  yaxis: {
+    categories: ['50 000', '10 000', '5000', '1000', '500', '100']
+  }
+}
+</script>
+
+<style>
+.apexcharts-tooltip {
+  backdrop-filter: blur(10px) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  flex-direction: row !important;
+  justify-content: space-evenly !important;
+  padding: 10px 12px 8px !important;
+}
+.apexcharts-tooltip.apexcharts-theme-light {
+  border: 1px solid #DFE6FE !important;
+  background: #F3F4FE !important;
+}
+.apexcharts-tooltip-title {
+  width: 100% !important;
+  font-size: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  text-align: center !important;
+  padding: 0 !important;
+  margin-bottom: 6px !important;
+}
+.apexcharts-tooltip-series-group.apexcharts-active,
+.apexcharts-tooltip-series-group:last-child,
+.apexcharts-tooltip-y-group {
+  padding: 0 !important;
+}
+.apexcharts-tooltip-text-y-value {
+  margin: 0 !important;
+}
+.apexcharts-tooltip-marker,
+.apexcharts-tooltip-text-y-label{
+  display: none !important;
+}
+.apexcharts-tooltip-text-y-value {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+.apexcharts-tooltip-series-group:first-of-type .apexcharts-tooltip-text-y-value {
+  color: #4C6FFF !important;
+}
+.apexcharts-tooltip-series-group:last-of-type .apexcharts-tooltip-text-y-value {
+  color: #F591B3 !important;
+}
+</style>

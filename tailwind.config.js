@@ -17,6 +17,7 @@ export default {
           DEFAULT: '#B5B5C3',
           100: '#E8E8E8',
           200: '#EDF1FD',
+          300: '#7A7A9D'
         },
         black: {
           DEFAULT: '#212121',
@@ -26,6 +27,12 @@ export default {
           DEFAULT: '#FF4945',
           100: '#FFECEB'
         },
+      },
+      container: {
+        center: true,
+        screens: {
+          '2xl': '1200px'
+        }
       }
     },
   },

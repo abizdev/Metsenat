@@ -2,10 +2,11 @@
   <button 
     :class="[
       variants[variant],
+      wrapperClass,
       { '!pointer-events-none': loading },
       { 'flex-row-reverse': iconLeft }
     ]"
-    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer"
+    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer transition-all"
     v-bind="{ disabled, type }"
   >
     <slot>
@@ -25,6 +26,7 @@ interface Props {
   text?: string,
   icon?: string,
   disabled?: boolean,
+  wrapperClass: string
   type: 'button' | 'submit',
 }
 
@@ -33,7 +35,7 @@ withDefaults(defineProps<Props>(), {
   loading: false,
   variant: 'primary',
   disabled: false,
-  type: 'button'
+  type: 'button',
 })
 
 const variants: { primary: string, secondary: string, delete: string } = {
