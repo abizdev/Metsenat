@@ -1,3 +1,6 @@
+@import '../icons/style.css';
+@import 'fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +12,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'rubik';
+    font-weight: 500;
   }
 
   body {

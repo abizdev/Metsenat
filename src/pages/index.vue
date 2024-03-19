@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import Dashboard from '@/components/Sections/Dashboard.vue'
+import Dashboard from '@/pages/Main/Dashboard.vue'
 
 import { useDashboardStore } from '@/stores/dashboard'
 

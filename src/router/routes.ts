@@ -13,13 +13,13 @@ const routes = [
     meta: {
       layout: 'default'
     },
-    // children: [
-    //   {
-    //     path: 'dashboard',
-    //     name: 'main-dashboard',
-    //     component: () => import('@/components/Sections/Dashboard.vue')
-    //   },
-    // ],
+    children: [
+      {
+        path: 'dashboard',
+        name: 'main-dashboard',
+        component: () => import('@/pages/Main/Dashboard.vue')
+      },
+    ],
     component: () => import('@/pages/index.vue')
   },
 

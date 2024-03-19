@@ -17,7 +17,7 @@ export default {
           DEFAULT: '#B5B5C3',
           100: '#E8E8E8',
           200: '#EDF1FD',
-          300: '#7A7A9D'
+          600: '#7A7A9D',
         },
         black: {
           DEFAULT: '#212121',

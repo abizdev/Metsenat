@@ -1,12 +1,12 @@
 <template>
-  <button 
+  <button
+    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer transition-all"
     :class="[
       variants[variant],
       wrapperClass,
       { '!pointer-events-none': loading },
       { 'flex-row-reverse': iconLeft }
     ]"
-    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer transition-all"
     v-bind="{ disabled, type }"
   >
     <slot>
