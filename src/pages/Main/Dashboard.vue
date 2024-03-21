@@ -41,7 +41,7 @@
           class="flex-center gap-2 text-xs text-[#7A7A9D] font-normal before:w-2 before:h-2 before:rounded-full before:bg-[#FF92AE]">Talabalar
         </span>
       </div>
-      <apexchart height="282px"  type="line" :options="options" :series="series"></apexchart>
+      <apexchart height="282px" type="line" :options :series></apexchart>
     </div>
 
   </div>

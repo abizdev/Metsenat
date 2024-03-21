@@ -1,7 +1,7 @@
 <template>
   <header class="bg-white">
     <div class="container flex-y-center justify-between py-3">
-      <RouterLink :to="{ name: 'main' }">
+      <RouterLink :to="{ name: 'dashboard' }">
         <img src="/images/logo.svg" alt="logo">
       </RouterLink>
 

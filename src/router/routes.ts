@@ -8,21 +8,15 @@ const routes = [
     component: () => import('@/pages/index.vue')
   },
   {
-    path: '/main',
-    name: 'main',
-    meta: {
-      layout: 'default'
-    },
-    children: [
-      {
-        path: 'dashboard',
-        name: 'main-dashboard',
-        component: () => import('@/pages/Main/Dashboard.vue')
-      },
-    ],
-    component: () => import('@/pages/index.vue')
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('@/pages/Main/Dashboard.vue')
   },
-
+  {
+    path: '/sponsors',
+    name: 'sponsors',
+    component: () => import('@/pages/Main/Sponsors.vue')
+  },
 ]
 
 export default routes
