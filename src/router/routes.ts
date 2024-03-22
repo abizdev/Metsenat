@@ -19,6 +19,11 @@ const routes = [
         name: 'main-dashboard',
         component: () => import('@/pages/Main/Dashboard.vue')
       },
+      {
+        path: 'sponsors',
+        name: 'main-sponsors',
+        component: () => import('@/pages/Main/Sponsors.vue')
+      },
     ],
     component: () => import('@/pages/index.vue')
   },
