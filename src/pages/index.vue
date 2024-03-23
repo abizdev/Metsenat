@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Dashboard />
-  </div>
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <script setup lang="ts">

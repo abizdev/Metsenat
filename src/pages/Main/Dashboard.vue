@@ -3,30 +3,24 @@
     <!-- totals -->
     <div class="flex-y-center justify-between">
       <!-- totals item -->
-      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 h-24 p-6 bg-white rounded-lg">
         <i class="w-12 h-full rounded-xl flex-center text-[#4C6FFF] bg-[#4C6FFF]/10 icon-cash"></i>
         <p class="text-xs text-[#7A7A9D] font-rubik font-normal">Jami to‘langan summa</p>
-        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_paid }} <span
-          class="text-gray ml-[6px]">UZS
-        </span></h4>
+        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_paid }} <span class="text-gray ml-[6px]">UZS</span></h4>
       </div>
 
       <!-- totals item -->
-      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 h-24 p-6 bg-white rounded-lg">
         <i class="w-12 h-full rounded-xl flex-center text-[#EDC700] bg-[#EDC700]/10 icon-cash"></i>
         <p class="text-xs text-[#7A7A9D] font-rubik font-normal">Jami so‘ralgan summa</p>
-        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_need }} <span
-          class="text-gray ml-[6px]">UZS
-        </span></h4>
+        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_need }} <span class="text-gray ml-[6px]">UZS</span></h4>
       </div>
 
       <!-- totals item -->
-      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 gap-y-1 h-24 p-6 bg-white rounded-lg">
+      <div class="max-w-[381px] w-full flex flex-col flex-wrap content-start gap-x-4 h-24 p-6 bg-white rounded-lg">
         <i class="w-12 h-full rounded-xl flex-center text-[#ED7200] bg-[#ED7200]/10 icon-cash"></i>
         <p class="text-xs text-[#7A7A9D] font-rubik font-normal">To‘lanishi kerak summa</p>
-        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_must_pay }} <span
-          class="text-gray ml-[6px]">
-          UZS</span></h4>
+        <h4 class="text-xl text-blue-700 font-bold font-['sf-pro-display']">{{ totals?.total_must_pay }} <span class="text-gray ml-[6px]">UZS</span></h4>
       </div>
     </div>
 
