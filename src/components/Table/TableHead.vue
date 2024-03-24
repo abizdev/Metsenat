@@ -13,8 +13,5 @@ interface Props {
   thClass?: string
 }
 
-const hello = 'hello world'
-
 defineProps<Props>()
-defineExpose({ hello })
 </script>
