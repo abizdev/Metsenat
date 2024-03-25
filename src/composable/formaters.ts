@@ -15,6 +15,6 @@ export const formatPhone = (phone: string): string => {
   return formatedString
 }
 
-export const formatSum = (sum: number) => {
-  return sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+export const formatNumbers = (sum: number | undefined) => {
+  return sum?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }

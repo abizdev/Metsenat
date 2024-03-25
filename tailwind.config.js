@@ -33,7 +33,10 @@ export default {
         screens: {
           '2xl': '1200px'
         }
-      }
+      },
+      width: {
+        50: '200px'
+      },
     },
   },
   plugins: [],

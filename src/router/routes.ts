@@ -24,6 +24,11 @@ const routes = [
         name: 'main-sponsors',
         component: () => import('@/pages/Main/Sponsors.vue')
       },
+      {
+        path: 'students',
+        name: 'main-students',
+        component: () => import('@/pages/Main/Students.vue')
+      },
     ],
     component: () => import('@/pages/index.vue')
   },

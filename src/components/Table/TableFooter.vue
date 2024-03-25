@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, watch } from 'vue';
+import { reactive, watch } from 'vue';
 
 interface Page {
   current: number;
