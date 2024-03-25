@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-12">
+  <div class="container mt-12 mb-20">
     <table class="w-full">
       <TableHead :tableHead ref="head">
         <th
@@ -8,7 +8,7 @@
           class="text-xs text-gray uppercase"
           :class="[
             { 
-              'text-left w-[9px]': key === 0,
+              'text-left w-4': key === 0,
               'w-[222px] text-left': key === 1,
               'w-32': key === 2,
               'w-132': key === 3,
@@ -21,10 +21,11 @@
           {{ item }}
         </th>
       </TableHead>
+
       <TableBody :list="sponsorsList">
         <!-- main info -->
         <template #content="{ sponsor, key }">
-          <td class="text-left w-[9px] text-sm text-black font-normal">{{ key + 1 }}</td>
+          <td class="text-left w-4 text-sm text-black font-normal">{{ key + 1 }}</td>
           <td class="w-[222px] text-left text-sm text-black">{{ sponsor?.full_name }}</td>
           <td class="w-32 text-xs text-black font-normal">{{ formatPhone(sponsor?.phone) }}</td>
           <td class="w-[132px] text-sm text-black">{{ formatSum(sponsor?.sum) }} <span class="text-gray">UZS</span></td>
@@ -39,6 +40,8 @@
           <button><img src="/public/images/eye.svg" alt="eye"></button>
         </template>
       </TableBody>
+
+      <TableFooter @change-current-page="getList" />
     </table>
   </div>
 </template>
@@ -46,6 +49,7 @@
 <script setup lang="ts">
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
+import TableFooter from '@/components/Table/TableFooter.vue'
 
 import { computed } from 'vue';
 import { useSponsorsStore } from '@/stores/sponsors';
@@ -53,9 +57,14 @@ import { useSponsorsStore } from '@/stores/sponsors';
 import { formatDate, formatPhone, formatSum } from '@/composable/formaters'
 import { statusDisplay } from '@/composable/statusDisplay'
 
+const tableHead: string[] = ['#', 'f.i.sh.', 'Tel.Raqami', 'Homiylik summasi', 'Sarflangan summa', 'Sana', 'Holati', 'Amallar']
+
 const sponsorsStore = useSponsorsStore()
 const sponsorsList = computed(() => sponsorsStore.sponsorList)
 sponsorsStore.getSponsorsList()
 
-const tableHead: string[] = ['#', 'f.i.sh.', 'Tel.Raqami', 'Homiylik summasi', 'Sarflangan summa', 'Sana', 'Holati', 'Amallar']
+const getList = (page: number) => {
+  sponsorsStore.getSponsorsList(page)
+}
+
 </script>
