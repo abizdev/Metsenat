@@ -1,33 +1,33 @@
 const routes = [
   {
     path: '/',
-    name: 'auth',
+    name: 'Login',
     meta: {
       layout: 'auth'
     },
-    component: () => import('@/pages/index.vue')
+    component: () => import('@/pages/Auth/PLogin.vue')
   },
   {
     path: '/main',
-    name: 'main',
+    name: 'Main',
     meta: {
       layout: 'default'
     },
     children: [
       {
         path: 'dashboard',
-        name: 'main-dashboard',
-        component: () => import('@/pages/Main/Dashboard.vue')
+        name: 'MainDashboard',
+        component: () => import('@/pages/Main/PDashboard.vue')
       },
       {
         path: 'sponsors',
-        name: 'main-sponsors',
-        component: () => import('@/pages/Main/Sponsors.vue')
+        name: 'MainSponsors',
+        component: () => import('@/pages/Main/PSponsors.vue')
       },
       {
         path: 'students',
-        name: 'main-students',
-        component: () => import('@/pages/Main/Students.vue')
+        name: 'MainStudents',
+        component: () => import('@/pages/Main/PStudents.vue')
       },
     ],
     component: () => import('@/pages/index.vue')

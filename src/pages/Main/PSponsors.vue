@@ -54,8 +54,8 @@ import TableFooter from '@/components/Table/TableFooter.vue'
 import { computed } from 'vue';
 import { useSponsorsStore } from '@/stores/sponsors';
 
-import { formatDate, formatPhone, formatNumbers } from '@/composable/formaters'
-import { statusDisplay } from '@/composable/statusDisplay'
+import { formatDate, formatPhone, formatNumbers } from '@/utils/formatters'
+import { statusDisplay } from '@/utils/statusDisplay'
 
 const tableHead: string[] = ['#', 'f.i.sh.', 'Tel.Raqami', 'Homiylik summasi', 'Sarflangan summa', 'Sana', 'Holati', 'Amallar']
 
@@ -67,4 +67,4 @@ const getList = (page: number) => {
   sponsorsStore.getSponsorsList(page)
 }
 
-</script>
+</script>@/utils/statusDisplay

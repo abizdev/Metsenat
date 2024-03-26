@@ -5,12 +5,12 @@
   >
     <slot name="prefix" />
     <input
-      :id="id"
-      :type="type"
-      :placeholder="placeholder"
+      :id
+      :type
+      :placeholder
       v-model="model"
       class="text-sm text-blue-700 bg-transparent flex-grow border-none outline-none placeholder:text-blue-700/35"
-      :class="[inputClass]"
+      :class="inputClass"
     >
     <slot name="sufix" />
   </div>

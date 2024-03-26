@@ -14,8 +14,5 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-  list: any
-}
-defineProps<Props>()
+defineProps<{ list: any }>()
 </script>

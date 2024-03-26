@@ -82,18 +82,18 @@ const prevPage = (): number => (page.current -= 1);
 const nextPage = (): number => (page.current += 1);
 const selectedPage = (selectedPage: number): number => (page.current = selectedPage);
 
-const calcCurrentList = (action: string) => {
-  page.startCount = action === 'increase' ? page.startCount + 10 : page.startCount - 10;
-  page.endCount = action === 'increase' ? page.endCount + 10 : page.endCount - 10;
+const calcCurrentList = (action: string, current: number) => {
+  page.endCount = page.current * 10
+  page.startCount = action === 'increase' ? current + 10 - 1  : page.startCount - 10;
 };
 
 watch(
   () => page.current,
   (newVal, oldVal) => {
     if (newVal > oldVal) {
-      calcCurrentList('increase');
+      calcCurrentList('increase', page.current);
     } else {
-      calcCurrentList('decrease');
+      calcCurrentList('decrease', page.current);
     }
     emit('changeCurrentPage', page.current);
   }

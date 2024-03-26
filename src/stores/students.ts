@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { ref } from 'vue'
 
-import { useApi } from '@/composable/useApi'
+import useApi from '@/plugins/axios'
 
 export const useStudentsStore = defineStore('students', () => {
   const studentsList = ref(null)

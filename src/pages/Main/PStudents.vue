@@ -50,7 +50,7 @@ import TableFooter from '@/components/Table/TableFooter.vue'
 import { computed } from 'vue';
 import { useStudentsStore } from '@/stores/students';
 
-import { formatNumbers } from '@/composable/formaters'
+import { formatNumbers } from '@/utils/formatters'
 
 const tableHead: string[] = ['#', 'f.i.sh.', 'Talabalik turi', 'OTM', 'Ajratilingan summa', 'Kontrakt miqdori', 'Amallar']
 

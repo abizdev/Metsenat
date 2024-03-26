@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { ref } from 'vue'
 
-import { useApi } from '@/composable/useApi'
+import useApi from '@/plugins/axios'
 
 import type { IDashboard } from '@/types/dashboard.types'
 
