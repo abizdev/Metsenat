@@ -9,7 +9,7 @@
       :type
       :placeholder
       v-model="model"
-      class="text-sm text-blue-700 bg-transparent flex-grow border-none outline-none placeholder:text-blue-700/35"
+      class="text-sm font-normal text-blue-700 bg-transparent flex-grow border-none outline-none placeholder:text-blue-700/35"
       :class="inputClass"
     >
     <slot name="sufix" />
