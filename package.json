@@ -18,8 +18,8 @@
     "apexcharts": "^3.47.0",
     "axios": "^1.6.7",
     "pinia": "^2.1.7",
-    "vee-validate": "^4.12.5",
     "vue": "^3.4.15",
+    "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.2.5",
     "vue3-apexcharts": "^1.5.2"
   },

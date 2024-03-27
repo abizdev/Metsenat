@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex-center gap-1 border  focus-within:border-blue-300 bg-gray-200/20 rounded-md py-3 px-4 transition"
-    :class="[wrapperClass]"
+    :class="[wrapperClass, { 'border-red': error }]"
   >
     <slot name="prefix" />
     <input

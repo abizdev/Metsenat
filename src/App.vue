@@ -12,13 +12,14 @@ import Auth from '@/layouts/Auth.vue'
 
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+// import { useRecaptchaProvider } from 'vue-recaptcha'
 
 const route = useRoute()
-
 const layouts = {
   auth: Auth,
   default: Default
 }
-
 const activeLayouts = computed(() => layouts[route.meta.layout ?? 'default'])
+
+// useRecaptchaProvider()
 </script>
