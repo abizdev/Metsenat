@@ -26,8 +26,8 @@ interface Props {
   text?: string,
   icon?: string,
   disabled?: boolean,
-  wrapperClass: string
-  type: 'button' | 'submit',
+  wrapperClass?: string
+  type?: 'button' | 'submit',
 }
 interface ButtonVariants { 
   primary: string, 

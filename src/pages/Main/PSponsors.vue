@@ -36,8 +36,10 @@
           </td>
         </template>
         <!-- actions -->
-        <template #tableBtn>
-          <button><img src="/images/eye.svg" alt="eye"></button>
+        <template #tableBtn="{ user }">
+          <RouterLink :to="{ name: 'Sponsor', params: { id: user.id } }">
+            <img src="/images/eye.svg" alt="eye">
+          </RouterLink>
         </template>
       </TableBody>
 
@@ -67,4 +69,4 @@ const getList = (page: number) => {
   sponsorsStore.getSponsorsList(page)
 }
 
-</script>@/utils/statusDisplay
+</script>

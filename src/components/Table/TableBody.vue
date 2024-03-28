@@ -7,7 +7,7 @@
     >
       <slot name="content" :user :key />
       <td class="w-16 flex-center text-sm text-black font-normal">
-        <slot name="tableBtn"></slot>
+        <slot name="tableBtn" :user></slot>
       </td>
     </tr>
   </tbody>

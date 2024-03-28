@@ -9,6 +9,7 @@ export default {
       colors: {
         blue: {
           DEFAULT: '#2E5BFF',
+          50: '#EBEEFC',
           100: '#5BABF2',
           500: '#3366FF',
           700: '#2E384D'
@@ -36,9 +37,16 @@ export default {
       },
       width: {
         30: '123px',
+        38: '153px',
         50: '200px',
+        61: '247px',
         71: '284px',
+        198: '793px',
+        205: '820px'
       },
+      margin: {
+        '6.5': '26px'
+      }
     },
   },
   plugins: [],

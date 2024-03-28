@@ -32,8 +32,10 @@
           <td class="w-[132px] text-sm text-black">{{ formatNumbers(user?.contract) }} <span class="text-gray">UZS</span></td>
         </template>
         <!-- actions -->
-        <template #tableBtn>
-          <button><img src="/images/eye.svg" alt="eye"></button>
+        <template #tableBtn="{ user }">
+          <RouterLink :to="{ name: 'Student', params: { id: user.id } }">
+            <img src="/images/eye.svg" alt="eye">
+          </RouterLink>
         </template>
       </TableBody>
 

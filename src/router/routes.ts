@@ -35,7 +35,16 @@ const routes = [
     ],
     component: () => import('@/pages/index.vue')
   },
-  
+  {
+    path: '/sponsor/:id',
+    name: 'Sponsor',
+    component: () => import('@/pages/Users/PSponsor.vue')
+  },
+  {
+    path: '/student/:id',
+    name: 'Student',
+    component: () => import('@/pages/Users/PStudent.vue')
+  },
 ]
 
 export default routes
