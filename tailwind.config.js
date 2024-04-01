@@ -56,7 +56,10 @@ export default {
       },
       margin: {
         '6.5': '26px'
-      }
+      },
+      top: {
+        70: '280px'
+      },
     },
   },
   plugins: [],

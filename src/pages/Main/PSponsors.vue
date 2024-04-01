@@ -67,6 +67,22 @@
           />
         </div>
       </FormGroup>
+
+      <!-- calendar -->
+      <FormGroup label="Homiylik summasi" id="Sana">
+        <div class="relative self-start">
+          <VDatePicker 
+            v-model.range="range" 
+            mode="dateTime" 
+            class="calendar abosolute -top-70 -left-0.5 z-30" 
+            v-if="calendarActive" 
+          />
+          <div class="py-3 px-4 bg-sky/20 border border-sky rounded-md flex-y-center justify-between" @click="toggleCalendarActive()">
+            <span class="text-sm text-blue-700/35 font-normal">{{ range.start }} - {{ range.end }}</span>
+            <i class="icon-calendar"></i>
+          </div>
+        </div>
+      </FormGroup>
     </template>
 
     <template #footer>
@@ -81,6 +97,7 @@
         :iconLeft="true"
         variant="primary"
         text="Natijalarni ko‘rish"
+        @click="toggleModal(false)"
       />
     </template>
   </CModal>
@@ -97,7 +114,7 @@ import FormRadio from '@/components/Form/Radio.vue';
 import BaseButton from '@/components/Base/Button.vue';
 import CModal from '@/components/Common/CModal.vue';
 
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useSponsorsStore } from '@/stores/sponsors';
 
 import { formatDate, formatPhone, formatNumbers } from '@/utils/formatters'
@@ -145,8 +162,24 @@ const getList = (page: number) => sponsorsStore.getSponsorsList(page)
 const showModal = ref<boolean>(false)
 const toggleModal = (val: boolean) => showModal.value = val
 
-
 const form = {
   radio: null
 }
+
+const calendarActive = ref(false)
+
+const range = ref({ start: '01.01.2024', end: '01.02.2024' });
+
+const toggleCalendarActive = () => calendarActive.value = !calendarActive.value
+
+watch(range, (calendarDate) => {
+  range.value.start = formatDate(calendarDate.start)
+  range.value.end = formatDate(calendarDate.end)  
+})
 </script>
+
+<style>
+.vc-time-picker {
+  display: none !important;
+}
+</style>
