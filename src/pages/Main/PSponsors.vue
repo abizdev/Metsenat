@@ -1,4 +1,6 @@
 <template>
+  <MainBanner @open-modal="toggleModal" />
+
   <div class="container mt-12 mb-20">
     <table class="w-full">
       <TableHead :tableHead ref="head">
@@ -46,27 +48,105 @@
       <TableFooter @change-current-page="getList" />
     </table>
   </div>
+
+  <CModal title="filter" :show="showModal" @close="toggleModal">
+    <template #content>
+      <!-- status -->
+      <FormGroup label="Ariza holati" id="status">
+        <FormSelect :options ref="select" />
+      </FormGroup>
+
+      <!-- sponsored sum -->
+      <FormGroup label="Homiylik summasi" id="sponsored_sum">
+        <div class="grid grid-cols-4 gap-3">
+          <FormRadio
+            v-for="(item, key) in sponsoringSum"
+            :key
+            :item="item"
+            v-model:model-value="form.radio" 
+          />
+        </div>
+      </FormGroup>
+    </template>
+
+    <template #footer>
+      <BaseButton 
+        icon="icon-eye"
+        :iconLeft="true"
+        variant="outline"
+        text="Tozalash"
+      />
+      <BaseButton 
+        icon="icon-eye"
+        :iconLeft="true"
+        variant="primary"
+        text="Natijalarni ko‘rish"
+      />
+    </template>
+  </CModal>
 </template>
 
 <script setup lang="ts">
+import MainBanner from '@/components/Layout/MainBanner.vue';
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
 import TableFooter from '@/components/Table/TableFooter.vue'
+import FormSelect from '@/components/Form/Select.vue';
+import FormGroup from '@/components/Form/Group.vue';
+import FormRadio from '@/components/Form/Radio.vue';
+import BaseButton from '@/components/Base/Button.vue';
+import CModal from '@/components/Common/CModal.vue';
 
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useSponsorsStore } from '@/stores/sponsors';
 
 import { formatDate, formatPhone, formatNumbers } from '@/utils/formatters'
 import { statusDisplay } from '@/utils/statusDisplay'
 
 const tableHead: string[] = ['#', 'f.i.sh.', 'Tel.Raqami', 'Homiylik summasi', 'Sarflangan summa', 'Sana', 'Holati', 'Amallar']
+const options: string[] = ['Barchasi', 'Yangi', 'Moderatsiyada', 'Tasdiqlangan', 'Bekor qilingan']
+const sponsoringSum: { id: number, sum: string | number }[] = [
+  {
+    id: Math.random(),
+    sum: 'Barchasi',
+  },
+  {
+    id: Math.random(),
+    sum: 1000000,
+  },
+  {
+    id: Math.random(),
+    sum: 5000000,
+  },
+  {
+    id: Math.random(),
+    sum: 7000000,
+  },
+  {
+    id: Math.random(),
+    sum: 10000000,
+  },
+  {
+    id: Math.random(),
+    sum: 30000000,
+  },
+  {
+    id: Math.random(),
+    sum: 50000000,
+  },
+]
 
 const sponsorsStore = useSponsorsStore()
 const sponsorsList = computed(() => sponsorsStore.sponsorsList)
 sponsorsStore.getSponsorsList()
 
-const getList = (page: number) => {
-  sponsorsStore.getSponsorsList(page)
-}
+const getList = (page: number) => sponsorsStore.getSponsorsList(page)
 
+const showModal = ref<boolean>(false)
+const toggleModal = (val: boolean) => showModal.value = val
+
+
+const form = {
+  radio: null
+}
 </script>

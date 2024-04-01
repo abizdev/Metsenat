@@ -20,7 +20,7 @@
 <script setup lang="ts">
 
 interface Props {
-  variant: 'primary' | 'secondary' | 'delete',
+  variant: 'primary' | 'secondary' | 'delete' | 'outline',
   loading?: boolean,
   iconLeft?: boolean,
   text?: string,
@@ -48,7 +48,7 @@ const variants: ButtonVariants = {
   primary: 'bg-blue text-white disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
   secondary: 'bg-gray-200 text-blue disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
   delete: 'bg-red-100 text-red disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
-  outline: 'bg-white text-blue border-blue disabled:cursor-not-allowed disabled:text-gray disabled:border-gray',
+  outline: 'bg-white text-blue border border-blue disabled:cursor-not-allowed disabled:text-gray disabled:border-gray',
 }
 
 </script>

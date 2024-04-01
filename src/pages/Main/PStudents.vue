@@ -1,4 +1,6 @@
 <template>
+  <MainBanner />
+
   <div class="container mt-12 mb-20">
     <table class="w-full">
       <TableHead :tableHead ref="head">
@@ -45,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import MainBanner from '@/components/Layout/MainBanner.vue';
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
 import TableFooter from '@/components/Table/TableFooter.vue'

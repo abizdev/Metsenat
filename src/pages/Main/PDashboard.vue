@@ -1,4 +1,6 @@
 <template>
+  <MainBanner />
+  
   <div class="container mt-12">
     <!-- totals -->
     <div class="flex-y-center justify-between">
@@ -28,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import MainBanner from '@/components/Layout/MainBanner.vue';
 
 import { useDashboardStore } from '@/stores/dashboard'
 import { computed } from 'vue'

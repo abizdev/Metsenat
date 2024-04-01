@@ -28,6 +28,9 @@ export default {
           DEFAULT: '#FF4945',
           100: '#FFECEB'
         },
+        sky: {
+          DEFAULT: '#E0E7FF',
+        }
       },
       container: {
         center: true,
@@ -37,12 +40,19 @@ export default {
       },
       width: {
         30: '123px',
+        31: '124px',
         38: '153px',
         50: '200px',
         61: '247px',
         71: '284px',
         198: '793px',
         205: '820px'
+      },
+      height: {
+        13: '52px'
+      },
+      maxWidth: {
+        '146.5': '586px',
       },
       margin: {
         '6.5': '26px'

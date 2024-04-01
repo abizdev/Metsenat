@@ -58,20 +58,20 @@
         <!-- given sum -->
         <div class="col-span-1 flex flex-col gap-3">
           <h6 class="text-xs text-gray uppercase">Ajratilingan summa</h6>
-          <p class="text-md text-black uppercase">{{ formatNumbers(student?.given)}}</p>
+          <p class="text-md text-black uppercase">{{ formatNumbers(student?.given)}} uzs</p>
         </div>
 
         <!-- contract -->
         <div class="col-span-1 flex flex-col gap-3">
           <h6 class="text-xs text-gray uppercase">Kontrakt miqdori</h6>
-          <p class="text-md text-black uppercase">{{ formatNumbers(student?.contract) }}</p>
+          <p class="text-md text-black uppercase">{{ formatNumbers(student?.contract) }} uzs</p>
         </div>
       </div>
 
     </div>
 
     <!-- table -->
-    <div class="bg-white rounded-xl p-8 w-198 mt-10">
+    <div class="bg-white rounded-xl p-8 w-198 mt-10 border border-blue-50">
       <!-- title -->
       <div class="flex-y-center justify-between">
         <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">Talabaga homiylar</h3>
@@ -103,17 +103,17 @@
           </th>
         </TableHead>
 
-        <TableBody :list="studentSponsors">
+        <TableBody :list="studentSponsors" wrapperClass="bg-[#FBFBFC] border border-blue/8">
           <!-- main info -->
           <template #content="{ user, key }">
             <td class="text-left w-4 text-sm text-black font-normal">{{ key + 1 }}</td>
-            <td class="w-[222px] text-left text-sm text-black">{{ user?.full_name }}</td>
-            <td class="w-36 text-sm text-black">{{ formatNumbers(user?.spent) }} <span class="text-gray">UZS</span></td>
+            <td class="w-[222px] text-left text-sm text-black">{{ user?.sponsor?.full_name }}</td>
+            <td class="w-36 text-sm text-black">{{ formatNumbers(user?.summa) }} <span class="text-gray">UZS</span></td>
           </template>
           <!-- actions -->
           <template #tableBtn="{ user }">
             <button>
-              <img src="/images/eye.svg" alt="eye">
+              <i class="icon-edit text-blue text-xl"></i>
             </button>
           </template>
         </TableBody>
@@ -126,6 +126,7 @@
 </template>
 
 <script setup lang="ts">
+
 import Banner from '@/components/Layout/Banner.vue'
 import BaseButton from '@/components/Base/Button.vue'
 import TableHead from '@/components/Table/TableHead.vue';
@@ -147,8 +148,5 @@ const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar']
 
 studentsStore.getStudentDetail(route.params.id)
 studentsStore.getStudentSponsors(route.params.id)
+
 </script>
-
-<style scoped>
-
-</style>

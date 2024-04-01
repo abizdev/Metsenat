@@ -11,7 +11,7 @@
           <i class="icon-user text-white text-[22px] w-8 h-8 rounded-md bg-[#00AE69] flex-x-center items-end" />
         </RouterLink>
 
-        <button class="active:scale-50 transition">
+        <button class="active:scale-50 transition" @click="logout">
           <i class="icon-logout text-gray text-lg"></i>
         </button>
       </div>
@@ -20,5 +20,12 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
+
+const logout = () => {
+  router.push({ name: 'Login' })
+  localStorage.clear()
+}
 </script>

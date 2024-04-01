@@ -35,6 +35,7 @@
           text="Filter"
           variant="secondary"
           wrapperClass="py-2.5 !w-30"
+          @click="openModal"
         />
       </div>
 
@@ -46,6 +47,12 @@
 import FormInput from '@/components/Form/Input.vue'
 import BaseButton from '@/components/Base/Button.vue';
 import { reactive } from 'vue';
+
+interface Emits {
+  (e: 'openModal', value: boolean): void
+}
+
+const emit = defineEmits<Emits>()
 
 const navlinks = [
   {
@@ -66,6 +73,8 @@ const navlinks = [
 const form = reactive({
   search: null
 })
+
+const openModal = () => emit('openModal', true)
 </script>
 
 <style scoped>
