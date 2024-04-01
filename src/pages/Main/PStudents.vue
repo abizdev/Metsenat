@@ -1,5 +1,5 @@
 <template>
-  <MainBanner />
+  <MainBanner @open-modal="toggleModal" />
 
   <div class="container mt-12 mb-20">
     <table class="w-full">
@@ -44,6 +44,36 @@
       <TableFooter @change-current-page="getList" />
     </table>
   </div>
+
+  <CModal title="filter" :show="showModal" @close="toggleModal">
+    <template #content>
+      <!-- status -->
+      <FormGroup label="Ariza holati" id="status">
+        <FormSelect :options="studentsType" ref="select" />
+      </FormGroup>
+
+      <!-- institutes -->
+      <FormGroup label="Ariza holati" id="status">
+        <FormSelect :options="institutesList" ref="select" optionsWrapper="h-52" />
+      </FormGroup>
+    </template>
+
+    <template #footer>
+      <BaseButton 
+        icon="icon-eye"
+        :iconLeft="true"
+        variant="outline"
+        text="Tozalash"
+      />
+      <BaseButton 
+        icon="icon-eye"
+        :iconLeft="true"
+        variant="primary"
+        text="Natijalarni ko‘rish"
+        @click="toggleModal(false)"
+      />
+    </template>
+  </CModal>
 </template>
 
 <script setup lang="ts">
@@ -51,9 +81,14 @@ import MainBanner from '@/components/Layout/MainBanner.vue';
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
 import TableFooter from '@/components/Table/TableFooter.vue'
+import FormSelect from '@/components/Form/Select.vue';
+import FormGroup from '@/components/Form/Group.vue';
+import BaseButton from '@/components/Base/Button.vue';
+import CModal from '@/components/Common/CModal.vue';
 
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStudentsStore } from '@/stores/students';
+import { useInstitutesStore } from '@/stores/institute'
 
 import { formatNumbers } from '@/utils/formatters'
 
@@ -62,9 +97,16 @@ const tableHead: string[] = ['#', 'f.i.sh.', 'Talabalik turi', 'OTM', 'Ajratilin
 const studentsStore = useStudentsStore()
 const studentsList = computed(() => studentsStore.studentsList)
 studentsStore.getStudentsList()
-
 const getList = (page: number) => {
   studentsStore.getStudentsList(page)
 }
 
+const institutesStore = useInstitutesStore()
+const institutesList = computed(() => institutesStore.institutesList)
+institutesStore.getInstitutesList()
+
+const studentsType = [{ id: Math.random(), name:'Barchasi' }, { id: Math.random(), name: 'Bakalavr' }, { id: Math.random(), name: 'Magistr' }]
+
+const showModal = ref<boolean>(false)
+const toggleModal = (val: boolean) => showModal.value = val
 </script>

@@ -121,7 +121,13 @@ import { formatDate, formatPhone, formatNumbers } from '@/utils/formatters'
 import { statusDisplay } from '@/utils/statusDisplay'
 
 const tableHead: string[] = ['#', 'f.i.sh.', 'Tel.Raqami', 'Homiylik summasi', 'Sarflangan summa', 'Sana', 'Holati', 'Amallar']
-const options: string[] = ['Barchasi', 'Yangi', 'Moderatsiyada', 'Tasdiqlangan', 'Bekor qilingan']
+const options: {id: number, name: string}[] = [
+  { id: Math.random(), name: 'Barchasi'},
+  { id: Math.random(), name: 'Yangi'},
+  { id: Math.random(), name: 'Moderatsiyada'},
+  { id: Math.random(), name: 'Tasdiqlangan'},
+  { id: Math.random(), name: 'Bekor qilingan'},
+]
 const sponsoringSum: { id: number, sum: string | number }[] = [
   {
     id: Math.random(),
