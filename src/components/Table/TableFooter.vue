@@ -18,36 +18,32 @@
 
       <!-- button pagination -->
       <div class="flex-center gap-2">
-        <!-- prev -->
-        <button
-          class="w-8 h-8 rounded flex-center bg-white border border-gray-200 disabled:border-none disabled:bg-gray-100"
-          :disabled="page.current === 1"
-          @click="prevPage"
+        <vue-awesome-paginate
+          :total-items="100"
+          :items-per-page="page.size"
+          :max-pages-shown="5"
+          v-model="page.current"
+          :on-click="selectedPage"
         >
-          <i class="icon-chevron-left text-gray text-xs"></i>
-        </button>
+          <!-- prev -->
+          <template #prev-button>
+            <button
+              :disabled-back-button="page.current == page.size"
+            >
+              <i class="icon-chevron-left text-gray text-xs"></i>
+            </button>
+          </template>
 
-        <!-- pages -->
-        <button
-          v-for="(pageCount, key) in 10"
-          :key
-          class="w-8 h-8 rounded flex-center bg-white border border-gray-200 text-sm"
-          :class="
-            page.current === pageCount ? '!text-blue !border-blue' : 'text-black border-gray-200'
-          "
-          @click="selectedPage(pageCount)"
-        >
-          {{ pageCount }}
-        </button>
+          <!-- next -->
+          <template #next-button>
+            <button
+              :disabled-next-button="page.current == page.size"
+            >
+              <i class="icon-chevron-right text-gray text-xs"></i>
+            </button>
+          </template>
 
-        <!-- next -->
-        <button
-          class="w-8 h-8 rounded flex-center bg-white border border-gray-200 disabled:border-none disabled:bg-gray-100"
-          :disabled="page.current === 10"
-          @click="nextPage"
-        >
-          <i class="icon-chevron-right text-gray text-xs"></i>
-        </button>
+        </vue-awesome-paginate>
       </div>
     </div>
   </tfoot>
@@ -88,8 +84,6 @@ const pageSizes = [
   { id: Math.random(), name: 10 },
 ]
 
-const prevPage = (): number => (page.current -= 1);
-const nextPage = (): number => (page.current += 1);
 const selectedPage = (selectedPage: number): number => (page.current = selectedPage);
 
 const calcCurrentList = (action: string, current: number) => {
@@ -113,3 +107,15 @@ watch(
   () => emit('changeCurrentPage', page.current, page.size)
 )
 </script>
+
+<style>
+.pagination-container {
+  @apply gap-2
+}
+.paginate-buttons {
+  @apply w-8 h-8 rounded flex-center bg-white border border-gray-200 text-sm disabled:border-none disabled:bg-gray-100
+}
+.paginate-buttons.number-buttons.active-page {
+  @apply text-blue border-blue
+}
+</style>
