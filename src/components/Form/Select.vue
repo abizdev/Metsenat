@@ -5,8 +5,8 @@
     @click="toggleSelectActive"
   >
     <!-- select -->
-    <div class="w-full flex-y-center justify-between">
-      <p class="text-sm text-blue-700 font-normal">{{ option }}</p>
+    <div class="w-full flex-y-center justify-between" :class="selectClass">
+      <p class="text-sm text-blue-700 font-normal">{{ model }}</p>
       <i
         class="icon-chevron-down text-gray transition duration-300"
         :class="{ 'rotate-180 !text-blue': selectActive }"
@@ -36,17 +36,17 @@ import { ref } from 'vue';
 
 interface Props {
   wrapperClass?: string;
+  selectClass?: string,
   optionsWrapper?: string;
   optionClass?: string;
-  options: { id: number; name: string }[] | null;
+  options: { id: number; name: string | number }[] | null;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
+const model = defineModel()
 
-const option = ref<string | null>(props.options[0]?.name);
 const selectActive = ref<boolean>(false);
-const setActiveOption = (val: any) => (option.value = val);
+const setActiveOption = (val: any) => (model.value = val);
 const toggleSelectActive = () => (selectActive.value = !selectActive.value);
 
-defineExpose({ option });
 </script>

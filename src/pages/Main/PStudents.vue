@@ -97,9 +97,8 @@ const tableHead: string[] = ['#', 'f.i.sh.', 'Talabalik turi', 'OTM', 'Ajratilin
 const studentsStore = useStudentsStore()
 const studentsList = computed(() => studentsStore.studentsList)
 studentsStore.getStudentsList()
-const getList = (page: number) => {
-  studentsStore.getStudentsList(page)
-}
+
+const getList = (current: number, size: number) => studentsStore.getStudentsList(current, size)
 
 const institutesStore = useInstitutesStore()
 const institutesList = computed(() => institutesStore.institutesList)

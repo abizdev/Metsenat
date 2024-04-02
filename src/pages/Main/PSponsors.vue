@@ -53,7 +53,7 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect :options ref="select" />
+        <FormSelect v-model="form.status" :options/>
       </FormGroup>
 
       <!-- sponsored sum -->
@@ -163,13 +163,14 @@ const sponsorsStore = useSponsorsStore()
 const sponsorsList = computed(() => sponsorsStore.sponsorsList)
 sponsorsStore.getSponsorsList()
 
-const getList = (page: number) => sponsorsStore.getSponsorsList(page)
+const getList = (current: number, size: number) => sponsorsStore.getSponsorsList(current, size)
 
 const showModal = ref<boolean>(false)
 const toggleModal = (val: boolean) => showModal.value = val
 
 const form = {
-  radio: null
+  radio: null,
+  status: null,
 }
 
 const calendarActive = ref(false)

@@ -8,16 +8,12 @@
       <!-- select pagination -->
       <div class="flex-center gap-3">
         <p class="text-sm text-black font-normal">Ko‘rsatish</p>
-        <select v-model="page.current" @change="selectedPage(page.current)">
-          <option
-            class="text-sm text-black font-normal"
-            v-for="(page, key) in 10"
-            :key
-            :value="page"
-          >
-            {{ page }}
-          </option>
-        </select>
+        <FormSelect
+          v-model="page.size"
+          :options="pageSizes" 
+          wrapperClass="bg-white !py-2"
+          selectClass="gap-2"
+        />
       </div>
 
       <!-- button pagination -->
@@ -58,25 +54,39 @@
 </template>
 
 <script setup lang="ts">
+import FormSelect from '../Form/Select.vue';
+
 import { reactive, watch } from 'vue';
 
 interface Page {
   current: number;
-  active: number;
+  size: number;
   startCount: number;
   endCount: number;
 }
 
 const emit = defineEmits<{
-  (e: 'changeCurrentPage', value: number): void;
+  (e: 'changeCurrentPage', current: number, size: number): void;
 }>();
 
 const page = reactive<Page>({
   current: 1,
-  active: 1,
+  size: 10,
   startCount: 1,
-  endCount: 10
+  endCount: 10,
 });
+const pageSizes = [
+  { id: Math.random(), name: 1 },
+  { id: Math.random(), name: 2 },
+  { id: Math.random(), name: 3 },
+  { id: Math.random(), name: 4 },
+  { id: Math.random(), name: 5 },
+  { id: Math.random(), name: 6 },
+  { id: Math.random(), name: 7 },
+  { id: Math.random(), name: 8 },
+  { id: Math.random(), name: 9 },
+  { id: Math.random(), name: 10 },
+]
 
 const prevPage = (): number => (page.current -= 1);
 const nextPage = (): number => (page.current += 1);
@@ -95,7 +105,11 @@ watch(
     } else {
       calcCurrentList('decrease', page.current);
     }
-    emit('changeCurrentPage', page.current);
+    emit('changeCurrentPage', page.current, page.size);
   }
 );
+watch(
+  () => page.size,
+  () => emit('changeCurrentPage', page.current, page.size)
+)
 </script>
