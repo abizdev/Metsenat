@@ -9,14 +9,14 @@
           :key
           class="text-xs text-gray uppercase"
           :class="[
-            { 
+            {
               'text-left w-4': key === 0,
               'w-[222px] text-left': key === 1,
               'w-28': key === 2,
               'w-50': key === 3,
               'w-[153px]': key === 4,
-              'w-[132px]': key === 5,
-            },
+              'w-[132px]': key === 5
+            }
           ]"
         >
           {{ item }}
@@ -30,13 +30,17 @@
           <td class="w-[222px] text-left text-sm text-black">{{ user?.full_name }}</td>
           <td class="w-28 text-sm text-black">{{ user?.type }}</td>
           <td class="w-50 text-xs text-black font-normal">{{ user?.institute?.name }}</td>
-          <td class="w-[153px] text-sm text-black">{{ formatNumbers(user?.given) }} <span class="text-gray">UZS</span></td>
-          <td class="w-[132px] text-sm text-black">{{ formatNumbers(user?.contract) }} <span class="text-gray">UZS</span></td>
+          <td class="w-[153px] text-sm text-black">
+            {{ formatNumbers(user?.given) }} <span class="text-gray">UZS</span>
+          </td>
+          <td class="w-[132px] text-sm text-black">
+            {{ formatNumbers(user?.contract) }} <span class="text-gray">UZS</span>
+          </td>
         </template>
         <!-- actions -->
         <template #tableBtn="{ user }">
           <RouterLink :to="{ name: 'Student', params: { id: user.id } }">
-            <img src="/images/eye.svg" alt="eye">
+            <img src="/images/eye.svg" alt="eye" />
           </RouterLink>
         </template>
       </TableBody>
@@ -49,23 +53,18 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect :options="studentsType" ref="select" />
+        <FormSelect v-model="form.status" :options="studentsType" />
       </FormGroup>
 
       <!-- institutes -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect :options="institutesList" ref="select" optionsWrapper="h-52" />
+        <FormSelect v-model="form.institute" :options="institutesList" optionsWrapper="h-52" />
       </FormGroup>
     </template>
 
     <template #footer>
-      <BaseButton 
-        icon="icon-eye"
-        :iconLeft="true"
-        variant="outline"
-        text="Tozalash"
-      />
-      <BaseButton 
+      <BaseButton icon="icon-eye" :iconLeft="true" variant="outline" text="Tozalash" />
+      <BaseButton
         icon="icon-eye"
         :iconLeft="true"
         variant="primary"
@@ -86,7 +85,7 @@ import FormGroup from '@/components/Form/Group.vue';
 import BaseButton from '@/components/Base/Button.vue';
 import CModal from '@/components/Common/CModal.vue';
 
-import { computed, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useStudentsStore } from '@/stores/students';
 import { useInstitutesStore } from '@/stores/institute'
 
@@ -105,6 +104,17 @@ const institutesList = computed(() => institutesStore.institutesList)
 institutesStore.getInstitutesList()
 
 const studentsType = [{ id: Math.random(), name:'Barchasi' }, { id: Math.random(), name: 'Bakalavr' }, { id: Math.random(), name: 'Magistr' }]
+
+const form = reactive({
+  status: studentsType[0].name,
+  institute: null
+})
+
+watch(
+  () => institutesList,
+  (newVal) => form.institute = newVal.value[0].name,
+  { deep: true }
+)
 
 const showModal = ref<boolean>(false)
 const toggleModal = (val: boolean) => showModal.value = val

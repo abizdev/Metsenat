@@ -53,7 +53,7 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model="form.status" :options/>
+        <FormSelect v-model:model-value="form.status" :options/>
       </FormGroup>
 
       <!-- sponsored sum -->
@@ -114,7 +114,7 @@ import FormRadio from '@/components/Form/Radio.vue';
 import BaseButton from '@/components/Base/Button.vue';
 import CModal from '@/components/Common/CModal.vue';
 
-import { computed, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useSponsorsStore } from '@/stores/sponsors';
 
 import { formatDate, formatPhone, formatNumbers } from '@/utils/formatters'
@@ -168,15 +168,13 @@ const getList = (current: number, size: number) => sponsorsStore.getSponsorsList
 const showModal = ref<boolean>(false)
 const toggleModal = (val: boolean) => showModal.value = val
 
-const form = {
+const form = reactive({
   radio: null,
-  status: null,
-}
+  status: options[0].name,
+})
 
 const calendarActive = ref(false)
-
 const range = ref({ start: '01.01.2024', end: '01.02.2024' });
-
 const toggleCalendarActive = () => calendarActive.value = !calendarActive.value
 
 watch(range, (calendarDate) => {
