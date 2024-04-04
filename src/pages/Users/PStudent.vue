@@ -1,5 +1,5 @@
 <template>
-  <Banner userType="student" :user="student" />
+  <Banner userType="student" :user="student" @sponsor-add-modal-toggle="sponsorAddModalToggle" />
 
   <section class="flex flex-col items-center justify-between mt-10 h-screen">
     <!-- info block -->
@@ -12,6 +12,7 @@
           :iconLeft="true"
           text="Tahrirlash"
           variant="secondary"
+          @click="studentEditModalToggle"
         />
       </div>
 
@@ -80,6 +81,7 @@
           :iconLeft="true"
           text="Homiy qo‘shish"
           variant="secondary"
+          @click="sponsorAddModalToggle"
         />
       </div>
 
@@ -112,7 +114,7 @@
           </template>
           <!-- actions -->
           <template #tableBtn="{ user }">
-            <button>
+            <button @click="sponsorEditModalToggle">
               <i class="icon-edit text-blue text-xl"></i>
             </button>
           </template>
@@ -123,6 +125,120 @@
   
     <img src="/images/bottom.png" class="w-205" alt="bottom">
   </section>
+
+  <!-- student edit -->
+  <CModal title="Tahrirlash" :show="studentEditModalActive" @close="studentEditModalToggle">
+    <template #content>
+      <!-- name -->
+      <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
+        <FormInput 
+          id="name"
+          type="text"
+          placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
+          v-model="form.student.name"
+        />
+      </FormGroup>
+  
+      <!-- phone -->
+      <FormGroup id="phone" label="Telefon raqam">
+        <FormInput 
+          id="phone"
+          type="text"
+          placeholder="###-##-##"
+          v-model="form.student.phone"
+        >
+          <template #prefix>
+            <span class="text-sm text-gray-700 font-normal">+998</span>
+          </template>
+        </FormInput>
+      </FormGroup>
+  
+      <!-- institutes -->
+      <FormGroup label="OTM" id="status">
+        <FormSelect v-model="form.student.institute" :options="institutesList" optionsWrapper="h-52" />
+      </FormGroup>
+  
+      <!-- contract -->
+      <FormGroup label="Homiylik summasi" id="amount">
+        <FormSelect v-model:model-value="form.student.contract" :options="options.amount"/>
+      </FormGroup>
+    </template>
+
+    <template #footer>
+      <BaseButton 
+        icon="icon-file"
+        :iconLeft="true"
+        text="Saqlash"
+        variant="primary"
+      />
+    </template>
+
+  </CModal>
+
+  <!-- sponsor edit -->
+  <CModal title="Homiylarni tahrirlash" :show="sponsorEditModalActive" @close="sponsorEditModalToggle">
+    <template #content>
+      <!-- name -->
+      <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
+        <FormInput 
+          id="name"
+          type="text"
+          placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
+          v-model="form.sponsor.name"
+        />
+      </FormGroup>
+
+      <!-- amount -->
+      <FormGroup label="Homiylik summasi" id="amount">
+        <FormSelect v-model:model-value="form.sponsor.sum" :options="options.amount"/>
+      </FormGroup>
+    </template>
+
+    <template #footer>
+      <BaseButton 
+        icon="icon-trash"
+        :iconLeft="true"
+        text="Homiyni o‘chirish"
+        variant="delete"
+      />
+      <BaseButton 
+        icon="icon-file"
+        :iconLeft="true"
+        text="Saqlash"
+        variant="primary"
+      />
+    </template>
+  </CModal>
+
+  <!-- sponsor add -->
+  <CModal title="Homiy qo‘shish" :show="sponsorAddModalActive" @close="sponsorAddModalToggle">
+    <template #content>
+      <!-- name -->
+      <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
+        <FormInput 
+          id="name"
+          type="text"
+          placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
+          v-model="form.sponsor.name"
+        />
+      </FormGroup>
+
+      <!-- amount -->
+      <FormGroup label="Homiylik summasi" id="amount">
+        <FormSelect v-model:model-value="form.sponsor.sum" :options="options.amount"/>
+      </FormGroup>
+    </template>
+
+    <template #footer>
+      <BaseButton 
+        icon="icon-add"
+        :iconLeft="true"
+        text="Qo‘shish"
+        variant="primary"
+      />
+    </template>
+  </CModal>
+
 </template>
 
 <script setup lang="ts">
@@ -131,12 +247,17 @@ import Banner from '@/components/Layout/Banner.vue'
 import BaseButton from '@/components/Base/Button.vue'
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
+import CModal from '@/components/Common/CModal.vue';
+import FormInput from '@/components/Form/Input.vue';
+import FormSelect from '@/components/Form/Select.vue';
+import FormGroup from '@/components/Form/Group.vue';
 
-import { computed } from 'vue';
+import { computed, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { formatPhone, formatNumbers } from '@/utils/formatters';
 import { useStudentsStore } from '@/stores/students'
+import { useInstitutesStore } from '@/stores/institute';
 
 const route = useRoute()
 
@@ -148,5 +269,58 @@ const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar']
 
 studentsStore.getStudentDetail(route.params.id)
 studentsStore.getStudentSponsors(route.params.id)
+
+const institutesStore = useInstitutesStore()
+const institutesList = computed(() => institutesStore.institutesList)
+institutesStore.getInstitutesList()
+
+const options = reactive({
+  institutes: null,
+  amount: [
+    { id: Math.random(), name: 'Barchasi', },
+    { id: Math.random(), name: `${formatNumbers(1000000)} UZS`, },
+    { id: Math.random(), name: `${formatNumbers(5000000)} UZS`, },
+    { id: Math.random(), name: `${formatNumbers(7000000)} UZS`, },
+    { id: Math.random(), name: `${formatNumbers(10000000)} UZS`, },
+    { id: Math.random(), name: `${formatNumbers(30000000)} UZS`, },
+    { id: Math.random(), name: `${formatNumbers(50000000)} UZS`, },
+  ],
+})
+
+const form = reactive({
+  student: {
+    name: student?.full_name,
+    phone: student?.phone,
+    institute: 'asdfadsf',// student?.institute?.name,
+    contract: student?.contract,
+  },
+  sponsor: {
+    name: null,
+    sum: null,
+  },
+})
+watch(
+  () => student,
+  (newVal) => {
+    form.student.name = newVal.value?.full_name
+    form.student.phone = formatPhone(newVal.value?.phone)
+    form.student.institute = newVal.value?.institute?.name
+    form.student.contract = formatNumbers(newVal.value?.contract)
+  },
+  { deep: true }
+)
+// watch(
+//   () => institutesList,
+//   (newVal) => form.student.institute = newVal.value[0].name,
+//   { deep: true }
+// )
+
+const studentEditModalActive = ref<boolean>(false)
+const sponsorEditModalActive = ref<boolean>(false)
+const sponsorAddModalActive = ref<boolean>(false)
+
+const studentEditModalToggle = ():boolean => studentEditModalActive.value = !studentEditModalActive.value
+const sponsorEditModalToggle = ():boolean => sponsorEditModalActive.value = !sponsorEditModalActive.value
+const sponsorAddModalToggle = ():boolean => sponsorAddModalActive.value = !sponsorAddModalActive.value
 
 </script>

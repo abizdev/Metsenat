@@ -11,7 +11,6 @@ export const useInstitutesStore = defineStore('institute', () => {
   const getInstitutesList = async (): Promise<void> => {
     try {
       const res = await useApi.get(`/institute-list/`)
-      console.log(res)
       institutesList.value = res.data
     } catch (error) {
       console.log('error in gettgin sposnsors list', error)
