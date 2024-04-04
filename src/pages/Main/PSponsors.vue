@@ -129,34 +129,13 @@ const options: {id: number, name: string}[] = [
   { id: Math.random(), name: 'Bekor qilingan'},
 ]
 const sponsoringSum: { id: number, sum: string | number }[] = [
-  {
-    id: Math.random(),
-    sum: 'Barchasi',
-  },
-  {
-    id: Math.random(),
-    sum: 1000000,
-  },
-  {
-    id: Math.random(),
-    sum: 5000000,
-  },
-  {
-    id: Math.random(),
-    sum: 7000000,
-  },
-  {
-    id: Math.random(),
-    sum: 10000000,
-  },
-  {
-    id: Math.random(),
-    sum: 30000000,
-  },
-  {
-    id: Math.random(),
-    sum: 50000000,
-  },
+  { id: Math.random(), sum: 'Barchasi', },
+  { id: Math.random(), sum: 1000000, },
+  { id: Math.random(), sum: 5000000, },
+  { id: Math.random(), sum: 7000000, },
+  { id: Math.random(), sum: 10000000, },
+  { id: Math.random(), sum: 30000000, },
+  { id: Math.random(), sum: 50000000, },
 ]
 
 const sponsorsStore = useSponsorsStore()

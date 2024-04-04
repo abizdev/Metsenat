@@ -24,23 +24,16 @@
           :max-pages-shown="5"
           v-model="page.current"
           :on-click="selectedPage"
+          :disabled-back-button="page.current == 1"
         >
           <!-- prev -->
           <template #prev-button>
-            <button
-              :disabled-back-button="page.current == page.size"
-            >
-              <i class="icon-chevron-left text-gray text-xs"></i>
-            </button>
+            <i class="icon-chevron-left text-gray text-xs"></i>
           </template>
 
           <!-- next -->
           <template #next-button>
-            <button
-              :disabled-next-button="page.current == page.size"
-            >
-              <i class="icon-chevron-right text-gray text-xs"></i>
-            </button>
+            <i class="icon-chevron-right text-gray text-xs"></i>
           </template>
 
         </vue-awesome-paginate>

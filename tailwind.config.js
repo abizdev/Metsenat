@@ -49,6 +49,7 @@ export default {
         205: '820px'
       },
       height: {
+        '10.5': '42px',
         13: '52px'
       },
       maxWidth: {
