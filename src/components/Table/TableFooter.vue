@@ -13,6 +13,7 @@
           :options="pageSizes" 
           wrapperClass="bg-white !py-2"
           selectClass="gap-2"
+          :selectedVal="page.size"
         />
       </div>
 
@@ -21,7 +22,7 @@
         <vue-awesome-paginate
           :total-items="100"
           :items-per-page="page.size"
-          :max-pages-shown="5"
+          :max-pages-shown="3"
           v-model="page.current"
           :on-click="selectedPage"
           :disabled-back-button="page.current == 1"
@@ -65,15 +66,8 @@ const page = reactive<Page>({
   endCount: 10,
 });
 const pageSizes = [
-  { id: Math.random(), name: 1 },
-  { id: Math.random(), name: 2 },
   { id: Math.random(), name: 3 },
-  { id: Math.random(), name: 4 },
-  { id: Math.random(), name: 5 },
-  { id: Math.random(), name: 6 },
   { id: Math.random(), name: 7 },
-  { id: Math.random(), name: 8 },
-  { id: Math.random(), name: 9 },
   { id: Math.random(), name: 10 },
 ]
 
@@ -97,7 +91,10 @@ watch(
 );
 watch(
   () => page.size,
-  () => emit('changeCurrentPage', page.current, page.size)
+  () => {
+    page.current = 1
+    emit('changeCurrentPage', page.current, page.size)
+  }
 )
 </script>
 

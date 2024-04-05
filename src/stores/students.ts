@@ -34,6 +34,39 @@ export const useStudentsStore = defineStore('students', () => {
       console.log('error in getting student detail', error)
     }
   }
+  const updateStudent = async (id: number, student: object) => {
+    loading.value = true
+    return new Promise((resolve, reject) => {
+      useApi.patch(`/student-update/${id}/`, JSON.stringify(student))
+        .then((res) => resolve(res))
+        .catch((error) => console.log(error, 'updating stiduen'))
+        .finally(() => loading.value = false)
+    })
+  }
+  const deleteStudent = (id: number) => {
+    loading.value = true
+    return new Promise((resolve, reject) => {
+      useApi.delete(`/student-delete/${id}/`)
+        .then((res) => resolve(res))
+        .catch((error) => {
+          reject(error)
+        })
+        .finally(() => loading.value = false)
+    })
+    
+  }
+  const deleteSponsor = (id: number) => {
+    loading.value = true
+    return new Promise((resolve, reject) => {
+      useApi.delete(`/sponsor-summa-delete/${id}/`)
+        .then((res) => resolve(res))
+        .catch((error) => {
+          reject(error)
+        })
+        .finally(() => loading.value = false)
+    })
+    
+  }
 
-  return { studentsList, loading, student, studentSponsors, getStudentSponsors, getStudentDetail, getStudentsList }
+  return { studentsList, loading, student, studentSponsors, getStudentSponsors, getStudentDetail, getStudentsList, updateStudent, deleteStudent, deleteSponsor }
 })

@@ -6,7 +6,7 @@
   >
     <!-- select -->
     <div class="w-full flex-y-center justify-between" :class="selectClass">
-      <p class="text-sm text-blue-700 font-normal">{{ model }}</p>
+      <p class="text-sm text-blue-700 font-normal">{{ model.name }}</p>
       <i
         class="icon-chevron-down text-gray transition duration-300"
         :class="{ 'rotate-180 !text-blue': selectActive }"
@@ -20,10 +20,10 @@
     >
       <button
         class="w-full text-left flex py-3 px-4 bg-white first-of-type:border-none border-t border-sky text-sm text-blue-700 font-normal hover:bg-blue hover:text-white transition duration-300"
-        :class="optionClass"
         v-for="(option, key) in options"
         :key
-        @click="setActiveOption(option.name)"
+        :class="[optionClass, { '!bg-blue text-white': selectedVal == option.name }]"
+        @click="setActiveOption(option)"
       >
         {{ option?.name }}
       </button>
@@ -39,14 +39,15 @@ interface Props {
   selectClass?: string,
   optionsWrapper?: string;
   optionClass?: string;
-  options: { id: number; name: string | number }[] | null;
+  selectedVal: string | number,
+  options: { id: number; name: string | number, value: any }[] | null;
 }
 
 const props = defineProps<Props>()
 const model = defineModel()
 
 const selectActive = ref<boolean>(false);
-const setActiveOption = (val: any) => (model.value = val);
+const setActiveOption = (val: any) => model.value = val;
 const toggleSelectActive = () => (selectActive.value = !selectActive.value);
 
 </script>

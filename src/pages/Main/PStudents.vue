@@ -53,12 +53,12 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model="form.status" :options="studentsType" />
+        <FormSelect v-model="form.status" :selectedVal="form.status" :options="studentsType" />
       </FormGroup>
 
       <!-- institutes -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model="form.institute" :options="institutesList" optionsWrapper="h-52" />
+        <FormSelect v-model="form.institute" :selectedVal="form.institute" :options="institutesList" optionsWrapper="h-52" />
       </FormGroup>
     </template>
 

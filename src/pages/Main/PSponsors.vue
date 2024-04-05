@@ -53,7 +53,7 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model:model-value="form.status" :options/>
+        <FormSelect v-model:model-value="form.status" :options :selectedVal="form.status"/>
       </FormGroup>
 
       <!-- sponsored sum -->

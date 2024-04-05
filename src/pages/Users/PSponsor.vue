@@ -95,17 +95,17 @@
 
         <!-- status -->
         <FormGroup label="Holati" id="status">
-          <FormSelect v-model:model-value="formLegal.status" :options="options.status"/>
+          <FormSelect v-model:model-value="formLegal.status" :selectedVal="formLegal.status" :options="options.status"/>
         </FormGroup>
         
         <!-- amount -->
         <FormGroup label="Homiylik summasi" id="amount">
-          <FormSelect v-model:model-value="formLegal.amount" :options="options.amount"/>
+          <FormSelect v-model:model-value="formLegal.amount" :selectedVal="formLegal.amount" :options="options.amount"/>
         </FormGroup>
         
         <!-- payment_type -->
         <FormGroup label="To‘lov turi" id="payment_type">
-          <FormSelect v-model:model-value="formLegal.payment_type" :options="options.payment_type"/>
+          <FormSelect v-model:model-value="formLegal.payment_type" :selectedVal="formLegal.payment_type" :options="options.payment_type"/>
         </FormGroup>
 
         <!-- firm -->
@@ -148,17 +148,17 @@
 
         <!-- status -->
         <FormGroup label="Holati" id="status">
-          <FormSelect v-model:model-value="form.status" :options="options.status"/>
+          <FormSelect v-model:model-value="form.status" :selectedVal="form.status" :options="options.status"/>
         </FormGroup>
         
         <!-- amount -->
         <FormGroup label="Homiylik summasi" id="amount">
-          <FormSelect v-model:model-value="form.amount" :options="options.amount"/>
+          <FormSelect v-model:model-value="form.amount" :selectedVal="form.amount" :options="options.amount"/>
         </FormGroup>
         
         <!-- payment_type -->
         <FormGroup label="To‘lov turi" id="payment_type">
-          <FormSelect v-model:model-value="form.payment_type" :options="options.payment_type"/>
+          <FormSelect v-model:model-value="form.payment_type" :selectedVal="form.payment_type" :options="options.payment_type"/>
         </FormGroup>
       </template>
 
@@ -253,9 +253,8 @@ watch(
   { deep: true }
 )
 
-const showModal = ref<boolean>(true)
+const showModal = ref<boolean>(false)
 const toggleModalActive = (val: boolean) => showModal.value = val
-const toggleModalType = () => formIsLegal.value = !formIsLegal.value
 </script>
 
 <style scoped></style>
