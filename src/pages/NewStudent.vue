@@ -82,7 +82,7 @@ import FormSelect from '@/components/Form/Select.vue';
 import { reactive, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core'
-import { required, minLength } from '@vuelidate/validators'
+import { required, alpha, numeric, integer } from '@vuelidate/validators'
 
 import { useInstitutesStore } from '@/stores/institute';
 import { useStudentsStore } from '@/stores/students';
@@ -110,9 +110,9 @@ const form = reactive({
   status: { name: options.studentsType[0].name, value: 3 }
 });
 const rules = {
-  name: { required, minLength },
-  phone: { required, minLength },
-  contract: { required },
+  name: { required, alpha, },
+  phone: { required, numeric, },
+  contract: { required, integer },
   institute: { required },
   status: { required },
 }

@@ -65,6 +65,7 @@
         </button>
       </div>
 
+      
       <!-- form legal entity sponsor -->
       <template v-if="sponsor?.is_legal">
         <!-- name -->
@@ -75,6 +76,7 @@
             placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
             v-model="formLegal.name"
             wrapperClass="h-10.5"
+            :error="v$.formLegal.value.name.$error"
           />
         </FormGroup>
 
@@ -86,6 +88,8 @@
             placeholder="###-##-##"
             v-model="formLegal.phone"
             wrapperClass="h-10.5"
+            :error="v$.formLegal.value.phone.$error"
+            v-mask="'## ###-##-##'"
           >
             <template #prefix>
               <span class="text-sm text-gray-700 font-normal">+998</span>
@@ -99,6 +103,7 @@
             v-model:model-value="formLegal.status"
             :selectedVal="formLegal.status.name"
             :options="options.status"
+            :error="v$.formLegal.value.status.$error"
           />
         </FormGroup>
 
@@ -117,6 +122,7 @@
             v-model:model-value="formLegal.payment_type"
             :selectedVal="formLegal.payment_type.name"
             :options="options.payment_type"
+            :error="v$.formLegal.value.payment_type.$error"
           />
         </FormGroup>
 
@@ -128,6 +134,7 @@
             placeholder="Tashkilot nomi"
             v-model="formLegal.firm"
             wrapperClass="h-10.5"
+            :error="v$.formLegal.value.firm.$error"
           />
         </FormGroup>
       </template>
@@ -141,12 +148,14 @@
             type="text"
             placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
             v-model="form.name"
+            :error="v$.form.value.name.$error"
           />
+          <span>{{ v$.form.value.name.$error }}</span>
         </FormGroup>
 
         <!-- phone -->
         <FormGroup id="phone" label="Telefon raqam">
-          <FormInput id="phone" type="text" placeholder="###-##-##" v-model="form.phone">
+          <FormInput id="phone" type="text" placeholder="###-##-##" v-model="form.phone" v-mask="'## ###-##-##'" :error="v$.form.value.phone.$error">
             <template #prefix>
               <span class="text-sm text-gray-700 font-normal">+998</span>
             </template>
@@ -159,6 +168,7 @@
             v-model:model-value="form.status"
             :selectedVal="form.status.name"
             :options="options.status"
+            :error="v$.form.value.status.$error"
           />
         </FormGroup>
 
@@ -177,12 +187,13 @@
             v-model:model-value="form.payment_type"
             :selectedVal="form.payment_type.name"
             :options="options.payment_type"
+            :error="v$.form.value.payment_type.$error"
           />
         </FormGroup>
       </template>
     </template>
     <template #footer>
-      <BaseButton icon="icon-file" :icon-left="true" text="Saqlash" variant="primary" />
+      <BaseButton icon="icon-file" :icon-left="true" text="Saqlash" variant="primary" @click="submit" />
     </template>
   </CModal>
 </template>
@@ -197,9 +208,12 @@ import FormSelect from '@/components/Form/Select.vue';
 
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useVuelidate } from '@vuelidate/core'
+import { required, alpha, numeric, integer } from '@vuelidate/validators'
 
 import { formatPhone, formatNumbers } from '@/utils/formatters';
 import { useSponsorsStore } from '@/stores/sponsors';
+import router from '@/router';
 
 const route = useRoute();
 
@@ -217,12 +231,12 @@ const options = {
   ],
   amount: [
     { id: Math.random(), name: 'Barchasi' },
-    { id: Math.random(), name: `${formatNumbers(1000000)} UZS` },
-    { id: Math.random(), name: `${formatNumbers(5000000)} UZS` },
-    { id: Math.random(), name: `${formatNumbers(7000000)} UZS` },
-    { id: Math.random(), name: `${formatNumbers(10000000)} UZS` },
-    { id: Math.random(), name: `${formatNumbers(30000000)} UZS` },
-    { id: Math.random(), name: `${formatNumbers(50000000)} UZS` }
+    { id: Math.random(), name: `${formatNumbers(1000000)} UZS`, value: 1000000, },
+    { id: Math.random(), name: `${formatNumbers(5000000)} UZS`, value: 5000000, },
+    { id: Math.random(), name: `${formatNumbers(7000000)} UZS`, value: 7000000, },
+    { id: Math.random(), name: `${formatNumbers(10000000)} UZS`, value: 10000000 },
+    { id: Math.random(), name: `${formatNumbers(30000000)} UZS`, value: 30000000 },
+    { id: Math.random(), name: `${formatNumbers(50000000)} UZS`, value: 50000000 },
   ],
   payment_type: [
     { id: Math.random(), name: 'Click' },
@@ -258,6 +272,38 @@ const formLegal = reactive({
     name: 'Nalichno'
   }
 });
+
+const rules = {
+  name: { required, },
+  phone: { required, },
+  status: { required },
+  payment_type: { required }, 
+}
+const v$ = {
+  form: useVuelidate(rules, form),
+  formLegal: useVuelidate({ ...rules, firm: { required }}, formLegal)
+}
+
+const submit = () => {
+  const formResult = v$.form.value.$validate()
+  const formLegalResult = v$.formLegal.value.$validate()
+
+  if (!formResult || !formLegalResult) {
+    console.log('form is not valid')
+    return
+  }
+
+  const updatedSponsor = {
+    ...sponsor.value,
+    full_name: form.name,
+    phone: form.phone,
+    sum: form.amount.value,
+  }
+
+  sponsorsStore.updateSponsor(sponsor.value.id, updatedSponsor)
+
+  toggleModalActive(false)
+}
 
 watch(
   () => sponsor,

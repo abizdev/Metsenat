@@ -17,6 +17,7 @@ export const useSponsorsStore = defineStore('sponsors', () => {
       console.log('error in gettgin sposnsors list', error)
     }
   }
+
   const getSponsorDetail = async (id: string): Promise<void> => {
     try {
       const res = await useApi.get(`/sponsor-detail/${id}`)
@@ -26,5 +27,16 @@ export const useSponsorsStore = defineStore('sponsors', () => {
     }
   }
 
-  return { sponsorsList, loading, sponsor, getSponsorDetail, getSponsorsList }
+  const updateSponsor = (id: number, sposnor: object) => {
+    loading.value = true
+
+    return new Promise((resolve, reject) => {
+      useApi.patch(`/sponsor-update/${id}/`, sponsor)
+        .then((res) => resolve(res))
+        .catch((error) => reject(error))
+        .finally(() => loading.value = true)
+    })
+  }
+
+  return { sponsorsList, loading, sponsor, getSponsorDetail, getSponsorsList, updateSponsor }
 })
