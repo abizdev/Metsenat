@@ -53,12 +53,17 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model="form.status" :selectedVal="form.status" :options="studentsType" />
+        <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType" />
       </FormGroup>
 
       <!-- institutes -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model="form.institute" :selectedVal="form.institute" :options="institutesList" optionsWrapper="h-52" />
+        <FormSelect
+          v-model="form.institute"
+          :selectedVal="form.institute.name"
+          :options="institutesList"
+          optionsWrapper="h-52"
+        />
       </FormGroup>
     </template>
 
@@ -79,7 +84,7 @@
 import MainBanner from '@/components/Layout/MainBanner.vue';
 import TableHead from '@/components/Table/TableHead.vue';
 import TableBody from '@/components/Table/TableBody.vue';
-import TableFooter from '@/components/Table/TableFooter.vue'
+import TableFooter from '@/components/Table/TableFooter.vue';
 import FormSelect from '@/components/Form/Select.vue';
 import FormGroup from '@/components/Form/Group.vue';
 import BaseButton from '@/components/Base/Button.vue';
@@ -87,35 +92,51 @@ import CModal from '@/components/Common/CModal.vue';
 
 import { computed, reactive, ref, watch } from 'vue';
 import { useStudentsStore } from '@/stores/students';
-import { useInstitutesStore } from '@/stores/institute'
+import { useInstitutesStore } from '@/stores/institute';
 
-import { formatNumbers } from '@/utils/formatters'
+import { formatNumbers } from '@/utils/formatters';
 
-const tableHead: string[] = ['#', 'f.i.sh.', 'Talabalik turi', 'OTM', 'Ajratilingan summa', 'Kontrakt miqdori', 'Amallar']
+const tableHead: string[] = [
+  '#',
+  'f.i.sh.',
+  'Talabalik turi',
+  'OTM',
+  'Ajratilingan summa',
+  'Kontrakt miqdori',
+  'Amallar'
+];
 
-const studentsStore = useStudentsStore()
-const studentsList = computed(() => studentsStore.studentsList)
-studentsStore.getStudentsList()
+const studentsStore = useStudentsStore();
+const studentsList = computed(() => studentsStore.studentsList);
+studentsStore.getStudentsList();
 
-const getList = (current: number, size: number) => studentsStore.getStudentsList(current, size)
+const getList = (current: number, size: number) => studentsStore.getStudentsList(current, size);
 
-const institutesStore = useInstitutesStore()
-const institutesList = computed(() => institutesStore.institutesList)
-institutesStore.getInstitutesList()
+const institutesStore = useInstitutesStore();
+const institutesList = computed(() => institutesStore.institutesList);
+institutesStore.getInstitutesList();
 
-const studentsType = [{ id: Math.random(), name:'Barchasi' }, { id: Math.random(), name: 'Bakalavr' }, { id: Math.random(), name: 'Magistr' }]
+const studentsType = [
+  { id: Math.random(), name: 'Barchasi' },
+  { id: Math.random(), name: 'Bakalavr' },
+  { id: Math.random(), name: 'Magistr' }
+];
 
 const form = reactive({
-  status: studentsType[0].name,
-  institute: null
-})
+  status: {
+    name: studentsType[0].name
+  },
+  institute: {
+    name: null
+  }
+});
 
 watch(
   () => institutesList,
-  (newVal) => form.institute = newVal.value[0].name,
+  (newVal) => (form.institute = newVal.value[0]),
   { deep: true }
-)
+);
 
-const showModal = ref<boolean>(false)
-const toggleModal = (val: boolean) => showModal.value = val
+const showModal = ref<boolean>(false);
+const toggleModal = (val: boolean) => (showModal.value = val);
 </script>

@@ -7,10 +7,10 @@
       <!-- title -->
       <div class="flex-y-center justify-between">
         <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">Homiy haqida</h3>
-        <BaseButton 
-          icon="icon-edit" 
-          :iconLeft="true" 
-          text="Tahrirlash" 
+        <BaseButton
+          icon="icon-edit"
+          :iconLeft="true"
+          text="Tahrirlash"
           variant="secondary"
           @click="toggleModalActive(true)"
         />
@@ -49,15 +49,15 @@
     <template #content>
       <!-- modal toggler -->
       <div class="border border-sky rounded-md overflow-hidden flex-center">
-        <button 
-          class="flex-grow tracking-wide leading-3 py-3.5 bg-white text-blue/60 text-xs uppercase hover:bg-slate-50 transition duration-150 disabled:cursor-not-allowed" 
+        <button
+          class="flex-grow tracking-wide leading-3 py-3.5 bg-white text-blue/60 text-xs uppercase hover:bg-slate-50 transition duration-150 disabled:cursor-not-allowed"
           :class="{ '!bg-blue text-white hover:!bg-blue-500': !sponsor?.is_legal }"
           :disabled="sponsor?.is_legal"
         >
           Jismoniy shaxs
         </button>
-        <button 
-          class="flex-grow tracking-wide leading-3 py-3.5 bg-white text-blue/60 text-xs uppercase hover:bg-slate-50 transition duration-150 disabled:cursor-not-allowed" 
+        <button
+          class="flex-grow tracking-wide leading-3 py-3.5 bg-white text-blue/60 text-xs uppercase hover:bg-slate-50 transition duration-150 disabled:cursor-not-allowed"
           :class="{ '!bg-blue text-white hover:!bg-blue-500': sponsor?.is_legal }"
           :disabled="!sponsor?.is_legal"
         >
@@ -69,7 +69,7 @@
       <template v-if="sponsor?.is_legal">
         <!-- name -->
         <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
-          <FormInput 
+          <FormInput
             id="name"
             type="text"
             placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
@@ -80,7 +80,7 @@
 
         <!-- phone -->
         <FormGroup id="phone" label="Telefon raqam">
-          <FormInput 
+          <FormInput
             id="phone"
             type="text"
             placeholder="###-##-##"
@@ -95,22 +95,34 @@
 
         <!-- status -->
         <FormGroup label="Holati" id="status">
-          <FormSelect v-model:model-value="formLegal.status" :selectedVal="formLegal.status" :options="options.status"/>
+          <FormSelect
+            v-model:model-value="formLegal.status"
+            :selectedVal="formLegal.status.name"
+            :options="options.status"
+          />
         </FormGroup>
-        
+
         <!-- amount -->
         <FormGroup label="Homiylik summasi" id="amount">
-          <FormSelect v-model:model-value="formLegal.amount" :selectedVal="formLegal.amount" :options="options.amount"/>
+          <FormSelect
+            v-model:model-value="formLegal.amount"
+            :selectedVal="formLegal.amount.name"
+            :options="options.amount"
+          />
         </FormGroup>
-        
+
         <!-- payment_type -->
         <FormGroup label="To‘lov turi" id="payment_type">
-          <FormSelect v-model:model-value="formLegal.payment_type" :selectedVal="formLegal.payment_type" :options="options.payment_type"/>
+          <FormSelect
+            v-model:model-value="formLegal.payment_type"
+            :selectedVal="formLegal.payment_type.name"
+            :options="options.payment_type"
+          />
         </FormGroup>
 
         <!-- firm -->
         <FormGroup id="firm" label="Tashkilot nomi">
-          <FormInput 
+          <FormInput
             id="firm"
             type="text"
             placeholder="Tashkilot nomi"
@@ -124,7 +136,7 @@
       <template v-else>
         <!-- name -->
         <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
-          <FormInput 
+          <FormInput
             id="name"
             type="text"
             placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
@@ -134,42 +146,43 @@
 
         <!-- phone -->
         <FormGroup id="phone" label="Telefon raqam">
-          <FormInput 
-            id="phone"
-            type="text"
-            placeholder="###-##-##"
-            v-model="form.phone"
-          >
+          <FormInput id="phone" type="text" placeholder="###-##-##" v-model="form.phone">
             <template #prefix>
               <span class="text-sm text-gray-700 font-normal">+998</span>
             </template>
-          </FormInput>
+          </FormInput>Ç
         </FormGroup>
 
         <!-- status -->
         <FormGroup label="Holati" id="status">
-          <FormSelect v-model:model-value="form.status" :selectedVal="form.status" :options="options.status"/>
+          <FormSelect
+            v-model:model-value="form.status"
+            :selectedVal="form.status.name"
+            :options="options.status"
+          />
         </FormGroup>
-        
+
         <!-- amount -->
         <FormGroup label="Homiylik summasi" id="amount">
-          <FormSelect v-model:model-value="form.amount" :selectedVal="form.amount" :options="options.amount"/>
+          <FormSelect
+            v-model:model-value="form.amount"
+            :selectedVal="form.amount.name"
+            :options="options.amount"
+          />
         </FormGroup>
-        
+
         <!-- payment_type -->
         <FormGroup label="To‘lov turi" id="payment_type">
-          <FormSelect v-model:model-value="form.payment_type" :selectedVal="form.payment_type" :options="options.payment_type"/>
+          <FormSelect
+            v-model:model-value="form.payment_type"
+            :selectedVal="form.payment_type.name"
+            :options="options.payment_type"
+          />
         </FormGroup>
       </template>
-
     </template>
     <template #footer>
-      <BaseButton 
-        icon="icon-file"
-        :icon-left="true"
-        text="Saqlash"
-        variant="primary"
-      />
+      <BaseButton icon="icon-file" :icon-left="true" text="Saqlash" variant="primary" />
     </template>
   </CModal>
 </template>
@@ -196,65 +209,75 @@ sponsorsStore.getSponsorDetail(route.params.id);
 
 const options = {
   status: [
-    { id: Math.random(), name: 'Barchasi'},
-    { id: Math.random(), name: 'Yangi'},
-    { id: Math.random(), name: 'Moderatsiyada'},
-    { id: Math.random(), name: 'Tasdiqlangan'},
-    { id: Math.random(), name: 'Bekor qilingan'},
+    { id: Math.random(), name: 'Barchasi' },
+    { id: Math.random(), name: 'Yangi' },
+    { id: Math.random(), name: 'Moderatsiyada' },
+    { id: Math.random(), name: 'Tasdiqlangan' },
+    { id: Math.random(), name: 'Bekor qilingan' }
   ],
   amount: [
-    { id: Math.random(), name: 'Barchasi', },
-    { id: Math.random(), name: `${formatNumbers(1000000)} UZS`, },
-    { id: Math.random(), name: `${formatNumbers(5000000)} UZS`, },
-    { id: Math.random(), name: `${formatNumbers(7000000)} UZS`, },
-    { id: Math.random(), name: `${formatNumbers(10000000)} UZS`, },
-    { id: Math.random(), name: `${formatNumbers(30000000)} UZS`, },
-    { id: Math.random(), name: `${formatNumbers(50000000)} UZS`, },
+    { id: Math.random(), name: 'Barchasi' },
+    { id: Math.random(), name: `${formatNumbers(1000000)} UZS` },
+    { id: Math.random(), name: `${formatNumbers(5000000)} UZS` },
+    { id: Math.random(), name: `${formatNumbers(7000000)} UZS` },
+    { id: Math.random(), name: `${formatNumbers(10000000)} UZS` },
+    { id: Math.random(), name: `${formatNumbers(30000000)} UZS` },
+    { id: Math.random(), name: `${formatNumbers(50000000)} UZS` }
   ],
   payment_type: [
-    { id: Math.random(), name: 'Click', },
-    { id: Math.random(), name: 'Payme', },
-    { id: Math.random(), name: 'Nalichno', },
+    { id: Math.random(), name: 'Click' },
+    { id: Math.random(), name: 'Payme' },
+    { id: Math.random(), name: 'Nalichno' }
   ]
-}
+};
 
 const form = reactive({
   name: null,
   phone: null,
-  status: null,
-  amount: null,
-  payment_type: 'Nalichno'
-})
+  status: {
+    name: null
+  },
+  amount: {
+    name: null
+  },
+  payment_type: {
+    name: 'Nalichno'
+  }
+});
 const formLegal = reactive({
   name: null,
   phone: null,
-  status: null,
-  amount: null,
+  status: {
+    name: null
+  },
+  amount: {
+    name: null
+  },
   firm: null,
-  payment_type: 'Nalichno'
-})
-const formIsLegal = ref<boolean>(false)
-
+  payment_type: {
+    name: 'Nalichno'
+  }
+});
 
 watch(
   () => sponsor,
   (newVal) => {
-    form.name = newVal.value?.full_name
-    form.phone = formatPhone(newVal.value?.phone)
-    form.status = newVal.value?.get_status_display
-    form.amount = `${formatNumbers(newVal.value?.sum)} UZS`
+    form.name = newVal.value?.full_name;
+    form.phone = formatPhone(newVal.value?.phone);
+    form.status.name = newVal.value?.get_status_display;
+    form.amount.name = `${formatNumbers(newVal.value?.sum)} UZS`;
 
-    formLegal.name = newVal.value?.full_name
-    formLegal.phone = formatPhone(newVal.value?.phone)
-    formLegal.status = newVal.value?.get_status_display
-    formLegal.amount = `${formatNumbers(newVal.value?.sum)} UZS`
-    formLegal.firm = newVal.value?.firm
+    formLegal.name = newVal.value?.full_name;
+    formLegal.phone = formatPhone(newVal.value?.phone);
+    formLegal.status.name = newVal.value?.get_status_display;
+    formLegal.amount.name = `${formatNumbers(newVal.value?.sum)} UZS`;
+    formLegal.firm = newVal.value?.firm;
   },
   { deep: true }
-)
+);
 
-const showModal = ref<boolean>(false)
-const toggleModalActive = (val: boolean) => showModal.value = val
+const showModal = ref<boolean>(false);
+const toggleModalActive = (val: boolean) => (showModal.value = val);
 </script>
 
 <style scoped></style>

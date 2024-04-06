@@ -14,7 +14,7 @@
         :iconLeft="true"
         text="Homiy qo‘shish"
         variant="secondary"
-        @click="emit('sponsorAddModalToggle')"
+        @click="emit('sponsorAddModalToggle', true)"
         v-if="userType === 'student'"
       />
     </div>
@@ -36,7 +36,7 @@ interface IUser {
 
 const props = defineProps<{ userType: string, user: IUser | null }>()
 const emit = defineEmits<{
-  (e: 'sponsorAddModalToggle'): void
+  (e: 'sponsorAddModalToggle', value: boolean): void
 }>()
 
 const backLink = computed(() => props.userType === 'student' ? 'MainStudents' : 'MainSponsors')

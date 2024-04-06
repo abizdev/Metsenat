@@ -39,8 +39,8 @@ interface Props {
   selectClass?: string,
   optionsWrapper?: string;
   optionClass?: string;
-  selectedVal: string | number,
-  options: { id: number; name: string | number, value: any }[] | null;
+  selectedVal: string | number | null,
+  options: { id: number; name: string | number, value?: any }[] | null;
 }
 
 const props = defineProps<Props>()

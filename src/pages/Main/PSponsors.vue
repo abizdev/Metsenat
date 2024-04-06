@@ -53,7 +53,7 @@
     <template #content>
       <!-- status -->
       <FormGroup label="Ariza holati" id="status">
-        <FormSelect v-model:model-value="form.status" :options :selectedVal="form.status"/>
+        <FormSelect v-model:model-value="form.status" :options :selectedVal="form.status.name"/>
       </FormGroup>
 
       <!-- sponsored sum -->
@@ -149,7 +149,9 @@ const toggleModal = (val: boolean) => showModal.value = val
 
 const form = reactive({
   radio: null,
-  status: options[0].name,
+  status: {
+    name: options[0].name,
+  },
 })
 
 const calendarActive = ref(false)

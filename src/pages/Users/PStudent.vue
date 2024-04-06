@@ -244,15 +244,15 @@
           id="name"
           type="text"
           placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
-          v-model="form.sponsor.name"
+          v-model="form.sponsor.full_name"
         />
       </FormGroup>
 
       <!-- amount -->
       <FormGroup label="Homiylik summasi" id="amount">
         <FormSelect
-          v-model:model-value="form.sponsor.sum"
-          :selectedVal="form.sponsor.sum"
+          v-model:model-value="form.sponsor.sponsoring"
+          :selectedVal="form.sponsor.sponsoring.name"
           :options="options.amount"
         />
       </FormGroup>
@@ -326,8 +326,11 @@ const form = reactive({
   },
   sponsor: {
     id: null,
-    name: null,
-    sum: null
+    full_name: null,
+    sponsoring: {
+      name: 'Barchasi',
+      sum: null,
+    }
   }
 });
 watch(
@@ -346,9 +349,9 @@ const studentEditModalActive = ref<boolean>(false);
 const sponsorEditModalActive = ref<boolean>(false);
 const sponsorAddModalActive = ref<boolean>(false);
 
-const studentEditModalToggle = (val: boolean): boolean => studentEditModalActive.value = val;
-const sponsorEditModalToggle = (val: boolean): boolean => sponsorEditModalActive.value = val;
-const sponsorAddModalToggle = (val: boolean): boolean => sponsorAddModalActive.value = val;
+const studentEditModalToggle = (val: boolean = true): boolean => studentEditModalActive.value = val;
+const sponsorEditModalToggle = (val: boolean = true): boolean => sponsorEditModalActive.value = val;
+const sponsorAddModalToggle = (val: boolean = true): boolean => sponsorAddModalActive.value = val;
 
 const getSponsorInfo = (sponsor: { id: number, sponsor: { full_name: string }, summa: number}) => {
   console.log(sponsor)

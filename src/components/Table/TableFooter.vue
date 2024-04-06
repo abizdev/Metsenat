@@ -13,7 +13,7 @@
           :options="pageSizes" 
           wrapperClass="bg-white !py-2"
           selectClass="gap-2"
-          :selectedVal="page.size"
+          :selectedVal="page.size.name"
         />
       </div>
 
@@ -21,7 +21,7 @@
       <div class="flex-center gap-2">
         <vue-awesome-paginate
           :total-items="100"
-          :items-per-page="page.size"
+          :items-per-page="page.size.name"
           :max-pages-shown="3"
           v-model="page.current"
           :on-click="selectedPage"
@@ -50,7 +50,7 @@ import { reactive, watch } from 'vue';
 
 interface Page {
   current: number;
-  size: number;
+  size: { name: number };
   startCount: number;
   endCount: number;
 }
@@ -61,7 +61,7 @@ const emit = defineEmits<{
 
 const page = reactive<Page>({
   current: 1,
-  size: 10,
+  size: { name: 10 },
   startCount: 1,
   endCount: 10,
 });
@@ -86,14 +86,14 @@ watch(
     } else {
       calcCurrentList('decrease', page.current);
     }
-    emit('changeCurrentPage', page.current, page.size);
+    emit('changeCurrentPage', page.current, page.size.name);
   }
 );
 watch(
   () => page.size,
   () => {
     page.current = 1
-    emit('changeCurrentPage', page.current, page.size)
+    emit('changeCurrentPage', page.current, page.size.name)
   }
 )
 </script>
