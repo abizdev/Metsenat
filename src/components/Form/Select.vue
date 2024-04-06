@@ -1,7 +1,7 @@
 <template>
   <div
     class="relative border border-sky bg-sky/20 rounded-md p-2.5 cursor-pointer"
-    :class="[{ '!border-blue': selectActive }, wrapperClass]"
+    :class="[{ '!border-blue': selectActive }, { '!border-red': error }, wrapperClass]"
     @click="toggleSelectActive"
   >
     <!-- select -->
@@ -40,6 +40,7 @@ interface Props {
   optionsWrapper?: string;
   optionClass?: string;
   selectedVal: string | number | null,
+  error?: boolean,
   options: { id: number; name: string | number, value?: any }[] | null;
 }
 

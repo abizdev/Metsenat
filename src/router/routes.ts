@@ -45,6 +45,11 @@ const routes = [
     name: 'Student',
     component: () => import('@/pages/Users/PStudent.vue')
   },
+  {
+    path: '/create-student/',
+    name: 'NewStudent',
+    component: () => import('@/pages/NewStudent.vue')
+  }
 ]
 
 export default routes

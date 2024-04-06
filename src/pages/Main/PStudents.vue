@@ -1,7 +1,16 @@
 <template>
   <MainBanner @open-modal="toggleModal" />
 
-  <div class="container mt-12 mb-20">
+  <div class="container mt-7 mb-20 flex flex-col">
+    <RouterLink :to="{ name: 'NewStudent' }" class="mb-7 self-end">
+      <BaseButton 
+        icon="icon-add"
+        :iconLeft="true"
+        text="Talaba qo‘shish"
+        variant="primary"
+      />
+    </RouterLink>
+
     <table class="w-full">
       <TableHead :tableHead ref="head">
         <th
@@ -52,12 +61,12 @@
   <CModal title="filter" :show="showModal" @close="toggleModal">
     <template #content>
       <!-- status -->
-      <FormGroup label="Ariza holati" id="status">
+      <FormGroup label="Talabalik turi" id="status">
         <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType" />
       </FormGroup>
 
       <!-- institutes -->
-      <FormGroup label="Ariza holati" id="status">
+      <FormGroup label="OTM" id="status">
         <FormSelect
           v-model="form.institute"
           :selectedVal="form.institute.name"

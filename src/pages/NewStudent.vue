@@ -1,0 +1,148 @@
+<template>
+  <Banner userType="new-student" title="Talaba qo‘shish" />
+  <section>
+    <form
+      @submit.prevent="submit"
+      class="grid grid-cols-2 gap-7 bg-white max-w-197.5 w-full border border-blue-50 mt-10 mx-auto p-7 rounded-xl"
+    >
+      <!-- name -->
+      <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
+        <FormInput
+          id="name"
+          type="text"
+          placeholder="F.I.Sh. (Familiya Ism Sharifingiz)"
+          v-model="form.name"
+          :error="v$.name.$error"
+        />
+      </FormGroup>
+
+      <!-- phone -->
+      <FormGroup id="phone" label="Telefon raqam">
+        <FormInput
+          id="phone"
+          type="text"
+          placeholder="00 000-00-00"
+          v-model="form.phone"
+          v-mask="'## ###-##-##'"
+          :error="v$.phone.$error"
+          @blur="v$.phone.$touch"
+        >
+          <template #prefix>
+            <span class="text-sm text-gray-700 font-normal">+998</span>
+          </template>
+        </FormInput>
+      </FormGroup>
+
+      <!-- institutes -->
+      <FormGroup label="OTM" id="status" class="col-span-2">
+        <FormSelect
+          v-model="form.institute"
+          :selectedVal="form.institute.name"
+          :options="institutesList"
+          optionsWrapper="h-52"
+          :error="v$.institute.$error"
+        />
+      </FormGroup>
+
+      <!-- status -->
+      <FormGroup label="Talabalik turi" id="status">
+        <FormSelect
+          v-model="form.status"
+          :selectedVal="form.status.name"
+          :options="options.studentsType"
+          :error="v$.status.$error"
+        />
+      </FormGroup>
+
+      <!-- contract -->
+      <FormGroup id="contract" label="Kontrakt summa">
+        <FormInput
+          id="contract"
+          type="text"
+          placeholder="Summani kiriting"
+          v-model="form.contract"
+          :error="v$.contract.$error"
+        />
+      </FormGroup>
+
+      <div class="flex-y-center justify-end gap-4 px-1 pt-7 border-t border-t-gray-200 col-span-2">
+        <BaseButton icon="icon-add" :iconLeft="true" text="Qo‘shish" variant="primary" type="submit" />
+      </div>
+    </form>
+  </section>
+</template>
+
+<script setup lang="ts">
+import BaseButton from '@/components/Base/Button.vue';
+import Banner from '@/components/Layout/Banner.vue';
+import FormInput from '@/components/Form/Input.vue';
+import FormGroup from '@/components/Form/Group.vue';
+import FormSelect from '@/components/Form/Select.vue';
+
+import { reactive, watch, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
+
+import { useInstitutesStore } from '@/stores/institute';
+import { useStudentsStore } from '@/stores/students';
+
+const institutesStore = useInstitutesStore();
+const institutesList = computed(() => institutesStore.institutesList);
+institutesStore.getInstitutesList();
+
+const studentsStore = useStudentsStore()
+
+const router = useRouter()
+
+const options = {
+  studentsType: [
+    { id: Math.random(), name: 'Bakalavr', value: 1 },
+    { id: Math.random(), name: 'Magistr', value: 2 }
+  ]
+};
+
+const form = reactive({
+  name: null,
+  phone: null,
+  contract: null,
+  institute: { name: null },
+  status: { name: options.studentsType[0].name, value: 3 }
+});
+const rules = {
+  name: { required, minLength },
+  phone: { required, minLength },
+  contract: { required },
+  institute: { required },
+  status: { required },
+}
+const v$ = useVuelidate(rules, form)
+
+const submit = async () => {
+  const result = await v$.value.$validate()
+
+  if (!result) {
+    return
+  }
+
+  const student = {
+    full_name: form.name,
+    type: form.status.value,
+    phone: form.phone,
+    institute: `${form.institute.id}`,
+    contract: +form.contract,
+  }
+
+  studentsStore.createStudent(student)
+    .then((res) => {
+      v$.value.$reset()
+      router.push({ name: 'MainStudents' })
+    })
+}
+
+watch(
+  () => institutesList,
+  (newVal) => (form.institute = newVal.value[0]),
+  { deep: true }
+);
+</script>

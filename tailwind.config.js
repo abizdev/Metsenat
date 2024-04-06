@@ -54,6 +54,7 @@ export default {
       },
       maxWidth: {
         '146.5': '586px',
+        '197.5': '790px'
       },
       margin: {
         '6.5': '26px'

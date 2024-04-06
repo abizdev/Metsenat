@@ -5,7 +5,7 @@
         <RouterLink :to="{ name: backLink }">
           <i class="icon-arrow-left"></i>
         </RouterLink>
-        <h2 class="text-2xl text-black font-[sf-pro-display]">{{ user?.full_name }}</h2>
+        <h2 class="text-2xl text-black font-[sf-pro-display]">{{ titleText }}</h2>
         <span class="text-xs font-normal rounded-md py-1.5 px-3" :class="userStatusDisplay(user?.get_status_display)" v-if="userType === 'sponsor'">{{ user?.get_status_display }}</span>
       </div>
   
@@ -34,10 +34,11 @@ interface IUser {
   get_status_display: string
 }
 
-const props = defineProps<{ userType: string, user: IUser | null }>()
+const props = defineProps<{ userType: string, user?: IUser | null, title?: string }>()
 const emit = defineEmits<{
   (e: 'sponsorAddModalToggle', value: boolean): void
 }>()
 
-const backLink = computed(() => props.userType === 'student' ? 'MainStudents' : 'MainSponsors')
+const backLink = computed(() => props.userType === 'student' || props.userType === 'new-student' ? 'MainStudents' : 'MainSponsors')
+const titleText = computed(() => props.title ? props.title : props.user?.full_name)
 </script>

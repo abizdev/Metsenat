@@ -150,7 +150,7 @@
             <template #prefix>
               <span class="text-sm text-gray-700 font-normal">+998</span>
             </template>
-          </FormInput>Ç
+          </FormInput>
         </FormGroup>
 
         <!-- status -->

@@ -43,7 +43,7 @@
       <div class="grid grid-cols-2 mt-6">
         <!-- phone -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">OTM</h6>
+          <h6 class="text-xs text-gray uppercase">telefon raqam</h6>
           <p class="text-md text-black">{{ formatPhone(student?.phone) }}</p>
         </div>
       </div>

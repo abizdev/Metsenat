@@ -11,6 +11,7 @@ import router from './router';
 import VueApexCharts from 'vue3-apexcharts';
 import VCalendar from 'v-calendar';
 import VueAwesomePaginate from "vue-awesome-paginate";
+import VueTheMask from 'vue-the-mask'
 
 const app = createApp(App);
 
@@ -18,6 +19,7 @@ app.use(createPinia());
 app.use(VueApexCharts);
 app.use(VCalendar, {})
 app.use(VueAwesomePaginate)
+app.use(VueTheMask)
 app.use(router);
 
 app.mount('#app');
