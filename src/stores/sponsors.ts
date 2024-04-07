@@ -27,7 +27,7 @@ export const useSponsorsStore = defineStore('sponsors', () => {
     }
   }
 
-  const updateSponsor = (id: number, sposnor: object) => {
+  const updateSponsor = (id: number, sponsor: object) => {
     loading.value = true
 
     return new Promise((resolve, reject) => {

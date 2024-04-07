@@ -65,7 +65,6 @@
         </button>
       </div>
 
-      
       <!-- form legal entity sponsor -->
       <template v-if="sponsor?.is_legal">
         <!-- name -->
@@ -150,12 +149,18 @@
             v-model="form.name"
             :error="v$.form.value.name.$error"
           />
-          <span>{{ v$.form.value.name.$error }}</span>
         </FormGroup>
 
         <!-- phone -->
         <FormGroup id="phone" label="Telefon raqam">
-          <FormInput id="phone" type="text" placeholder="###-##-##" v-model="form.phone" v-mask="'## ###-##-##'" :error="v$.form.value.phone.$error">
+          <FormInput
+            id="phone"
+            type="text"
+            placeholder="###-##-##"
+            v-model="form.phone"
+            v-mask="'## ###-##-##'"
+            :error="v$.form.value.phone.$error"
+          >
             <template #prefix>
               <span class="text-sm text-gray-700 font-normal">+998</span>
             </template>
@@ -193,7 +198,13 @@
       </template>
     </template>
     <template #footer>
-      <BaseButton icon="icon-file" :icon-left="true" text="Saqlash" variant="primary" @click="submit" />
+      <BaseButton
+        icon="icon-file"
+        :icon-left="true"
+        text="Saqlash"
+        variant="primary"
+        @click="submit"
+      />
     </template>
   </CModal>
 </template>
@@ -209,17 +220,15 @@ import FormSelect from '@/components/Form/Select.vue';
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core'
-import { required, alpha, numeric, integer } from '@vuelidate/validators'
+import { required } from '@vuelidate/validators'
 
 import { formatPhone, formatNumbers } from '@/utils/formatters';
 import { useSponsorsStore } from '@/stores/sponsors';
-import router from '@/router';
 
 const route = useRoute();
 
 const sponsorsStore = useSponsorsStore();
 const sponsor = computed(() => sponsorsStore.sponsor);
-sponsorsStore.getSponsorDetail(route.params.id);
 
 const options = {
   status: [
@@ -277,7 +286,7 @@ const rules = {
   name: { required, },
   phone: { required, },
   status: { required },
-  payment_type: { required }, 
+  payment_type: { required },
 }
 const v$ = {
   form: useVuelidate(rules, form),
@@ -289,7 +298,6 @@ const submit = () => {
   const formLegalResult = v$.formLegal.value.$validate()
 
   if (!formResult || !formLegalResult) {
-    console.log('form is not valid')
     return
   }
 
@@ -301,10 +309,11 @@ const submit = () => {
   }
 
   sponsorsStore.updateSponsor(sponsor.value.id, updatedSponsor)
-
-  toggleModalActive(false)
+    .then(() => toggleModalActive(false))
+    .finally(() => sponsorsStore.getSponsorDetail(route.params.id))
 }
 
+// form values
 watch(
   () => sponsor,
   (newVal) => {
@@ -322,8 +331,10 @@ watch(
   { deep: true }
 );
 
+// fatch user data
+watch(route.params.id, sponsorsStore.getSponsorDetail(route.params.id), { immediate: true })
+
 const showModal = ref<boolean>(false);
 const toggleModalActive = (val: boolean) => (showModal.value = val);
-</script>
 
-<style scoped></style>
+</script>

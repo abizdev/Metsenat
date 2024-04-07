@@ -25,7 +25,6 @@
           v-model="form.phone"
           v-mask="'## ###-##-##'"
           :error="v$.phone.$error"
-          @blur="v$.phone.$touch"
         >
           <template #prefix>
             <span class="text-sm text-gray-700 font-normal">+998</span>

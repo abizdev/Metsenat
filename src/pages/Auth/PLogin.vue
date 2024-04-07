@@ -8,9 +8,9 @@
 
     <form class="flex flex-col gap-[22px] mt-11" @submit.prevent="submitForm">
       <!-- login -->
-      <FormGroup label="LOGIN" id="inputLogin">
+      <FormGroup label="LOGIN" id="login">
         <FormInput
-          id="inputLogin"
+          id="login"
           placeholder="adm8904"
           type="text"
           v-model:model-value="form.login"
@@ -19,12 +19,13 @@
       </FormGroup>
 
       <!-- password -->
-      <FormGroup label="PAROL" id="inputPassword">
+      <FormGroup label="PAROL" id="password">
         <FormInput
-          id="inputPassword"
+          id="password"
           placeholder="******"
           type="password"
           v-model:model-value="form.password"
+          :error="v$.password.$error"
         />
       </FormGroup>
 
@@ -54,8 +55,8 @@ const router = useRouter()
 const loading = ref(false)
 
 const form = reactive({
-  login: 'metsenatadmin', // 'metsenatadmin',
-  password: 'uF9aH1vZ3bV2kN2y', // 'uF9aH1vZ3bV2kN2y'
+  login: '', // 'metsenatadmin',
+  password: '', // 'uF9aH1vZ3bV2kN2y'
   reCaptcha: false
 })
 const rules = {
@@ -70,11 +71,10 @@ const handleReCaptcha = () => {
 }
 
 const submitForm = async () => {
-  loading.value = true;
+  const result = await v$.value.$validate()
 
-  if (!form.login && !form.password && !form.reCaptcha) {
-    loading.value = false;
-    alert('error');
+  if (!result) {
+    console.log(result)
     return
   }
 
