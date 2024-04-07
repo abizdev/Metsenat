@@ -153,7 +153,7 @@
 
       <!-- phone -->
       <FormGroup id="phone" label="Telefon raqam">
-        <FormInput id="phone" type="text" placeholder="###-##-##" v-model="form.student.phone">
+        <FormInput id="phone" type="text" placeholder="###-##-##" v-mask="'## ###-##-##'" v-model="form.student.phone">
           <template #prefix>
             <span class="text-sm text-gray-700 font-normal">+998</span>
           </template>
@@ -288,14 +288,40 @@ const studentsStore = useStudentsStore();
 const student = computed(() => studentsStore.student);
 const studentSponsors = computed(() => studentsStore.studentSponsors);
 
-const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar'];
+const getSponsorInfo = (sponsor: { id: number, sponsor: { full_name: string }, summa: number}) => {
 
-studentsStore.getStudentDetail(route.params.id);
-studentsStore.getStudentSponsors(route.params.id);
+  form.sponsor.id = sponsor.id;
+  form.sponsor.name = sponsor.sponsor.full_name;
+  form.sponsor.sum = sponsor.summa;
+
+  sponsorEditModalToggle(true)
+}
+const updateStudent = () => {
+  const updatedStudent = {
+    full_name: form.student.name,
+    phone: form.student.phone,
+    institute: `${form.student.institute.id}`,
+    given: form.student.given.value,
+  }
+
+  studentsStore.updateStudent(student.value?.id, updatedStudent)
+    .then(() => studentEditModalToggle(false))
+    .finally(() => studentsStore.getStudentDetail(route.params.id))
+}
+const deleteStudent = () => {
+  studentsStore.deleteStudent(student.value?.id)
+    .then(() => router.push({ name: 'MainStudents' }))
+}
+const deleteSponsor = () => {
+  studentsStore.deleteSponsor(form.sponsor.id)
+    .then(() => sponsorEditModalToggle(false))
+    .then(() => studentsStore.getStudentSponsors(route.params.id))
+}
+
+const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar'];
 
 const institutesStore = useInstitutesStore();
 const institutesList = computed(() => institutesStore.institutesList);
-institutesStore.getInstitutesList();
 
 const options = reactive({
   institutes: null,
@@ -333,6 +359,8 @@ const form = reactive({
     }
   }
 });
+
+// form values
 watch(
   () => student,
   (newVal) => {
@@ -345,6 +373,17 @@ watch(
   { deep: true }
 );
 
+// fetch data
+watch(
+  () => route.params.id,
+  () => {
+    studentsStore.getStudentDetail(route.params.id);
+    studentsStore.getStudentSponsors(route.params.id);
+    institutesStore.getInstitutesList();
+  },
+  { immediate: true }
+)
+
 const studentEditModalActive = ref<boolean>(false);
 const sponsorEditModalActive = ref<boolean>(false);
 const sponsorAddModalActive = ref<boolean>(false);
@@ -352,32 +391,4 @@ const sponsorAddModalActive = ref<boolean>(false);
 const studentEditModalToggle = (val: boolean = true): boolean => studentEditModalActive.value = val;
 const sponsorEditModalToggle = (val: boolean = true): boolean => sponsorEditModalActive.value = val;
 const sponsorAddModalToggle = (val: boolean = true): boolean => sponsorAddModalActive.value = val;
-
-const getSponsorInfo = (sponsor: { id: number, sponsor: { full_name: string }, summa: number}) => {
-  console.log(sponsor)
-  form.sponsor.id = sponsor.id;
-  form.sponsor.name = sponsor.sponsor.full_name;
-  form.sponsor.sum = sponsor.summa;
-
-  sponsorEditModalToggle(true)
-}
-const updateStudent = () => {
-  const updatedStudent = {
-    full_name: form.student.name,
-    phone: form.student.phone,
-    institute: `${form.student.institute.id}`,
-    given: form.student.given.value,
-  }
-
-  studentsStore.updateStudent(student.value?.id, updatedStudent)
-    .then(() => studentEditModalToggle(false))
-}
-const deleteStudent = () => {
-  studentsStore.deleteStudent(student.value?.id)
-    .then(() => router.push({ name: 'MainStudents' }))
-}
-const deleteSponsor = () => {
-  studentsStore.deleteSponsor(form.sponsor.id)
-    .then(() => sponsorEditModalToggle(false))
-}
 </script>
