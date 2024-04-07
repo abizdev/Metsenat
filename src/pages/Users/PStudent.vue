@@ -185,7 +185,8 @@
         icon="icon-file" 
         :iconLeft="true" 
         text="Saqlash" 
-        variant="primary" 
+        variant="primary"
+        :loading
         @click="updateStudent"
       />
     </template>
@@ -225,12 +226,14 @@
         text="Homiyni o‘chirish" 
         variant="delete"
         @click="deleteSponsor"
+        :loading
       />
       <BaseButton 
         icon="icon-file" 
         :iconLeft="true" 
         text="Saqlash" 
         variant="primary"
+        :loading
       />
     </template>
   </CModal>
@@ -259,7 +262,7 @@
     </template>
 
     <template #footer>
-      <BaseButton icon="icon-add" :iconLeft="true" text="Qo‘shish" variant="primary" />
+      <BaseButton icon="icon-add" :iconLeft="true" text="Qo‘shish" variant="primary" :loading />
     </template>
   </CModal>
 </template>
@@ -287,6 +290,7 @@ const route = useRoute();
 const studentsStore = useStudentsStore();
 const student = computed(() => studentsStore.student);
 const studentSponsors = computed(() => studentsStore.studentSponsors);
+const loading = computed(() => studentsStore.loading)
 
 const getSponsorInfo = (sponsor: { id: number, sponsor: { full_name: string }, summa: number}) => {
 

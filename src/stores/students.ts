@@ -55,7 +55,7 @@ export const useStudentsStore = defineStore('students', () => {
       useApi
         .patch(`/student-update/${id}/`, JSON.stringify(student))
         .then((res) => resolve(res))
-        .catch((error) => console.log(error, 'updating stiduen'))
+        .catch((error) => reject(error))
         .finally(() => (loading.value = false));
     });
   };
@@ -97,6 +97,6 @@ export const useStudentsStore = defineStore('students', () => {
     createStudent,
     updateStudent,
     deleteStudent,
-    deleteSponsor,
+    deleteSponsor
   };
 });

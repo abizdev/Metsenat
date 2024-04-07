@@ -36,4 +36,7 @@
     @apply flex justify-center
   }
 
+  .transition-300 {
+    @apply transition duration-300
+  }
 }

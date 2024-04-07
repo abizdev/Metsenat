@@ -34,7 +34,7 @@ export const useSponsorsStore = defineStore('sponsors', () => {
       useApi.patch(`/sponsor-update/${id}/`, sponsor)
         .then((res) => resolve(res))
         .catch((error) => reject(error))
-        .finally(() => loading.value = true)
+        .finally(() => loading.value = false)
     })
   }
 

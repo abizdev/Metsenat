@@ -32,72 +32,77 @@
       <!-- reCaptcha -->
       <VueRecaptcha @verify="handleReCaptcha" sitekey="6LfN96UpAAAAAEZoakt8EBLc7bRUrRad-2rigwMw" />
 
-      <BaseButton text="Kirish" wrapper-class="!py-[14px]" variant="primary" type="submit"/>
+      <BaseButton
+        text="Kirish"
+        wrapper-class="!py-[14px]"
+        variant="primary"
+        type="submit"
+        :loading
+        :disabled="!form.login || !form.password || !form.reCaptcha"
+      />
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormGroup from '@/components/Form/Group.vue'
-import FormInput from '@/components/Form/Input.vue'
-import BaseButton from '@/components/Base/Button.vue'
+import FormGroup from '@/components/Form/Group.vue';
+import FormInput from '@/components/Form/Input.vue';
+import BaseButton from '@/components/Base/Button.vue';
 
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { VueRecaptcha } from "vue-recaptcha";
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+import { VueRecaptcha } from 'vue-recaptcha';
 
-import useApi from '@/plugins/axios'
+import useApi from '@/plugins/axios';
 
-const router = useRouter()
-const loading = ref(false)
+const router = useRouter();
+const loading = ref(false);
 
 const form = reactive({
   login: '', // 'metsenatadmin',
   password: '', // 'uF9aH1vZ3bV2kN2y'
   reCaptcha: false
-})
+});
 const rules = {
   login: { required },
   password: { required },
-  reCaptcha: { required },
-}
-const v$ = useVuelidate(rules, form)
+  reCaptcha: { required }
+};
+const v$ = useVuelidate(rules, form);
 
 const handleReCaptcha = () => {
-  form.reCaptcha = true
-}
+  form.reCaptcha = true;
+};
 
 const submitForm = async () => {
-  const result = await v$.value.$validate()
+  loading.value = true;
+  const result = await v$.value.$validate();
 
   if (!result) {
-    console.log(result)
-    return
+    loading.value = false
+    return;
   }
 
   const obj = {
     username: form.login,
     password: form.password
-  }
-  
+  };
+
   try {
-    const res = await useApi.post('/auth/login/', obj)
+    const res = await useApi.post('/auth/login/', obj);
 
-    localStorage.refresh = res.data.refresh
-    localStorage.access = res.data.access
-
+    localStorage.refresh = res.data.refresh;
+    localStorage.access = res.data.access;
   } catch (error) {
-    console.log('error in logging user', error)
+    console.log('error in logging user', error);
   } finally {
-    loading.value = false
-    router.push({ name: 'MainDashboard' })
+    loading.value = false;
+    router.push({ name: 'MainDashboard' });
   }
-  
-}
-
+};
 </script>
 
 <style scoped></style>

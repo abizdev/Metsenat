@@ -65,7 +65,14 @@
       </FormGroup>
 
       <div class="flex-y-center justify-end gap-4 px-1 pt-7 border-t border-t-gray-200 col-span-2">
-        <BaseButton icon="icon-add" :iconLeft="true" text="Qo‘shish" variant="primary" type="submit" />
+        <BaseButton
+          icon="icon-add"
+          :iconLeft="true"
+          text="Qo‘shish"
+          variant="primary"
+          type="submit"
+          :loading
+        />
       </div>
     </form>
   </section>
@@ -80,8 +87,8 @@ import FormSelect from '@/components/Form/Select.vue';
 
 import { reactive, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useVuelidate } from '@vuelidate/core'
-import { required, alpha, numeric, integer } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core';
+import { required, alpha, numeric, integer } from '@vuelidate/validators';
 
 import { useInstitutesStore } from '@/stores/institute';
 import { useStudentsStore } from '@/stores/students';
@@ -90,9 +97,13 @@ const institutesStore = useInstitutesStore();
 const institutesList = computed(() => institutesStore.institutesList);
 institutesStore.getInstitutesList();
 
-const studentsStore = useStudentsStore()
+const studentsStore = useStudentsStore();
+const loading = computed({
+  get() { return studentsStore.loading },
+  set(val) { loading.value = val }
+});
 
-const router = useRouter()
+const router = useRouter();
 
 const options = {
   studentsType: [
@@ -109,19 +120,20 @@ const form = reactive({
   status: { name: options.studentsType[0].name, value: 3 }
 });
 const rules = {
-  name: { required, alpha, },
-  phone: { required, numeric, },
+  name: { required, alpha },
+  phone: { required, numeric },
   contract: { required, integer },
   institute: { required },
-  status: { required },
-}
-const v$ = useVuelidate(rules, form)
+  status: { required }
+};
+const v$ = useVuelidate(rules, form);
 
 const submit = async () => {
-  const result = await v$.value.$validate()
+  const result = await v$.value.$validate();
 
   if (!result) {
-    return
+    loading.value = false;
+    return;
   }
 
   const student = {
@@ -129,15 +141,14 @@ const submit = async () => {
     type: form.status.value,
     phone: form.phone,
     institute: `${form.institute.id}`,
-    contract: +form.contract,
-  }
+    contract: +form.contract
+  };
 
-  studentsStore.createStudent(student)
-    .then((res) => {
-      v$.value.$reset()
-      router.push({ name: 'MainStudents' })
-    })
-}
+  studentsStore.createStudent(student).then(() => {
+    v$.value.$reset();
+    router.push({ name: 'MainStudents' });
+  });
+};
 
 watch(
   () => institutesList,

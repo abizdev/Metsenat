@@ -201,6 +201,7 @@
       <BaseButton
         icon="icon-file"
         :icon-left="true"
+        :loading
         text="Saqlash"
         variant="primary"
         @click="submit"
@@ -229,6 +230,7 @@ const route = useRoute();
 
 const sponsorsStore = useSponsorsStore();
 const sponsor = computed(() => sponsorsStore.sponsor);
+const loading = computed(() => sponsorsStore.loading)
 
 const options = {
   status: [

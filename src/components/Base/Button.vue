@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer transition-all"
+    class="flex-center gap-[10px] text-sm font-medium py-2 px-8 rounded-md active:scale-95 cursor-pointer transition-300 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray"
     :class="[
       variants[variant],
       wrapperClass,
@@ -9,15 +9,23 @@
     ]"
     v-bind="{ disabled, type }"
   >
-    <slot>
-      <i :class="iconLeft" v-if="iconLeft"></i>
-      <span v-if="text">{{ text }}</span>
-      <i :class="icon" v-if="icon"></i>
-    </slot>
+    <!-- loader -->
+    <Loader :color="loaderColors[variant]" v-if="loading" />
+
+    <!-- main -->
+    <template v-else>
+      <slot>
+        <i :class="iconLeft" v-if="iconLeft"></i>
+        <span v-if="text">{{ text }}</span>
+        <i :class="icon" v-if="icon"></i>
+      </slot>
+    </template>
+
   </button>
 </template>
 
 <script setup lang="ts">
+import Loader from '@/components/Base/Loader.vue'
 
 interface Props {
   variant: 'primary' | 'secondary' | 'delete' | 'outline',
@@ -45,10 +53,17 @@ withDefaults(defineProps<Props>(), {
 })
 
 const variants: ButtonVariants = {
-  primary: 'bg-blue text-white disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
-  secondary: 'bg-gray-200 text-blue disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
-  delete: 'bg-red-100 text-red disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray',
-  outline: 'bg-white text-blue border border-blue disabled:cursor-not-allowed disabled:text-gray disabled:border-gray',
+  primary: 'bg-blue text-white hover:bg-blue-800',
+  secondary: 'bg-gray-200 text-blue hover:bg-gray-100',
+  delete: 'bg-red-100 text-red hover:bg-red-200',
+  outline: 'bg-white text-blue border border-blue hover:bg-gray-200 disabled:border-gray',
+}
+
+const loaderColors = {
+  primary: 'white',
+  secondary: '#2E5BFF',
+  delete: '#FF4945',
+  outline: '#2E5BFF',
 }
 
 </script>
