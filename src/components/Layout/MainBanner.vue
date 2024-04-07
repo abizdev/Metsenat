@@ -20,8 +20,9 @@
         <FormInput
           id="search"
           placeholder="Izlash"
-          type="text"
-          wrapperClass="!bg-gray-100 border-none !py-2.5 !w-71"
+          type="search"
+          variant="primary"
+          wrapperClass="!bg-gray-100 border-transparent !py-2.5 !w-71"
           v-model:model-value="form.search"
         >
           <template #prefix>

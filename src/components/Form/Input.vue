@@ -20,7 +20,7 @@
 
 interface Props {
   id: string,
-  type: 'text' | 'password',
+  type: 'text' | 'password' | 'search',
   placeholder: string,
   wrapperClass?: string
   inputClass?: string,
