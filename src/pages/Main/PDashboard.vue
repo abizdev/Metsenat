@@ -14,13 +14,13 @@
 
     <!-- chart -->
     <div class="flex flex-col bg-white p-6 rounded-lg mt-[28px]">
-      <h2 class="text-2xl text-blue-700 font-bold font-['sf-pro-display']">Homiylar va talabalar soni</h2>
+      <h2 class="text-2xl text-blue-700 font-bold font-['sf-pro-display']">{{ $t('total_users') }}</h2>
       <div class="flex-y-center gap-5 mt-2">
         <span
-          class="flex-center gap-2 text-xs text-[#7A7A9D] font-normal before:w-2 before:h-2 before:rounded-full before:bg-blue">Homiylar
+          class="flex-center gap-2 capitalize text-xs text-[#7A7A9D] font-normal before:w-2 before:h-2 before:rounded-full before:bg-blue">{{ $t('sponsors') }}
         </span>
         <span
-          class="flex-center gap-2 text-xs text-[#7A7A9D] font-normal before:w-2 before:h-2 before:rounded-full before:bg-[#FF92AE]">Talabalar
+          class="flex-center gap-2 capitalize text-xs text-[#7A7A9D] font-normal before:w-2 before:h-2 before:rounded-full before:bg-[#FF92AE]">{{ $t('students') }}
         </span>
       </div>
       <apexchart height="282px" type="line" :options :series></apexchart>
@@ -32,8 +32,8 @@
 <script setup lang="ts">
 import MainBanner from '@/components/Layout/MainBanner.vue';
 
-import { useDashboardStore } from '@/stores/dashboard'
 import { computed } from 'vue'
+import { useDashboardStore } from '@/stores/dashboard'
 import { formatNumbers } from '@/utils/formatters';
 
 const dashboardStore = useDashboardStore()
@@ -44,11 +44,11 @@ dashboardStore.getDashboardTotals()
 // chart
 const series = [
   {
-    name: 'Homiylar',
+    name: 'Homiylar', // $t('sponsors'),
     data: [31, 40, 28, 51, 42, 109, 100],
   },
   {
-    name: 'Talabalar',
+    name: 'Talabalar', // $t('students'),
     data: [11, 32, 45, 32, 34, 52, 41]
   },
 ]
@@ -76,9 +76,9 @@ const options = {
 
 const getTotalData = computed(() => (key: string) => {
   const titles = {
-    total_paid: 'Jami to‘langan summa', 
-    total_need: 'Jami so‘ralgan summa', 
-    total_must_pay: 'To‘lanishi kerak summa', 
+    total_paid: "Jami to‘langan summa", // $t('total_payed'), 
+    total_need: "Jami so‘ralgan summa", // $t('total_need'), 
+    total_must_pay: "To‘lanishi kerak summa", // $t('total_must_pay'), 
   }
   
   const iconStyles = {

@@ -6,19 +6,21 @@
     <div class="flex flex-col bg-white rounded-xl p-8 w-198 border border-blue-50">
       <!-- title -->
       <div class="flex-y-center justify-between">
-        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">Talaba haqida</h3>
+        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">
+          {{ $t('about_student') }}
+        </h3>
         <div class="flex-center gap-2">
           <BaseButton
             icon="icon-trash"
             :iconLeft="true"
-            text="Talaba o`chirish"
+            :text="$t('button.delete_student')"
             variant="delete"
             @click="deleteStudent"
           />
           <BaseButton
             icon="icon-edit"
             :iconLeft="true"
-            text="Tahrirlash"
+            :text="$t('edit')"
             variant="secondary"
             @click="studentEditModalToggle"
           />
@@ -26,7 +28,7 @@
       </div>
 
       <div class="flex-center mt-8">
-        <p class="text-xs text-blue bg-gray-200 py-0.5 px-3 uppercase">Asosiy ma’lumotlar</p>
+        <p class="text-xs text-blue bg-gray-200 py-0.5 px-3 uppercase">{{ $t('main_info') }}</p>
         <span class="flex-grow h-px bg-blue-50"></span>
       </div>
 
@@ -43,14 +45,14 @@
       <div class="grid grid-cols-2 mt-6">
         <!-- phone -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">telefon raqam</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('phone') }}</h6>
           <p class="text-md text-black">{{ formatPhone(student?.phone) }}</p>
         </div>
       </div>
 
       <div class="flex-center mt-8">
         <p class="text-xs text-blue bg-gray-200 py-0.5 px-3 uppercase">
-          O‘qish joyi haqida ma’lumot
+          {{ $t('study_place_info') }}
         </p>
         <span class="flex-grow h-px bg-blue-50"></span>
       </div>
@@ -65,19 +67,19 @@
 
         <!-- degree -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">Talabalik turi</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('label.student_type') }}</h6>
           <p class="text-md text-black">{{ student?.type }}</p>
         </div>
 
         <!-- given sum -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">Ajratilingan summa</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('label.allocated_amount') }}</h6>
           <p class="text-md text-black uppercase">{{ formatNumbers(student?.given) }} uzs</p>
         </div>
 
         <!-- contract -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">Kontrakt miqdori</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('label.contract_summ') }}</h6>
           <p class="text-md text-black uppercase">{{ formatNumbers(student?.contract) }} uzs</p>
         </div>
       </div>
@@ -87,11 +89,13 @@
     <div class="bg-white rounded-xl p-8 w-198 mt-10 border border-blue-50">
       <!-- title -->
       <div class="flex-y-center justify-between">
-        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">Talabaga homiylar</h3>
+        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">
+          {{ $t('sponsor_to_student') }}
+        </h3>
         <BaseButton
           icon="icon-add"
           :iconLeft="true"
-          text="Homiy qo‘shish"
+          :text="$t('button.add_sponsor')"
           variant="secondary"
           @click="sponsorAddModalToggle"
         />
@@ -152,8 +156,14 @@
       </FormGroup>
 
       <!-- phone -->
-      <FormGroup id="phone" label="Telefon raqam">
-        <FormInput id="phone" type="text" placeholder="###-##-##" v-mask="'## ###-##-##'" v-model="form.student.phone">
+      <FormGroup id="phone" :label="$t('phone')">
+        <FormInput
+          id="phone"
+          type="text"
+          placeholder="###-##-##"
+          v-mask="'## ###-##-##'"
+          v-model="form.student.phone"
+        >
           <template #prefix>
             <span class="text-sm text-gray-700 font-normal">+998</span>
           </template>
@@ -171,7 +181,7 @@
       </FormGroup>
 
       <!-- given sum -->
-      <FormGroup label="Homiylik summasi" id="amount">
+      <FormGroup :label="$t('label.sponsorship_amount')" id="amount">
         <FormSelect
           v-model:model-value="form.student.given"
           :selectedVal="form.student.given.name"
@@ -181,10 +191,10 @@
     </template>
 
     <template #footer>
-      <BaseButton 
-        icon="icon-file" 
-        :iconLeft="true" 
-        text="Saqlash" 
+      <BaseButton
+        icon="icon-file"
+        :iconLeft="true"
+        :text="$t('button.save')"
         variant="primary"
         :loading
         @click="updateStudent"
@@ -194,7 +204,7 @@
 
   <!-- sponsor edit -->
   <CModal
-    title="Homiylarni tahrirlash"
+    :title="$t('edit_sponsor')"
     :show="sponsorEditModalActive"
     @close="sponsorEditModalToggle"
   >
@@ -210,7 +220,7 @@
       </FormGroup>
 
       <!-- amount -->
-      <FormGroup label="Homiylik summasi" id="amount">
+      <FormGroup :label="$t('label.sponsorship_amount')" id="amount">
         <FormSelect
           v-model:model-value="form.sponsor.sum"
           :selectedVal="form.sponsor.sum"
@@ -220,18 +230,18 @@
     </template>
 
     <template #footer>
-      <BaseButton 
-        icon="icon-trash" 
-        :iconLeft="true" 
-        text="Homiyni o‘chirish" 
+      <BaseButton
+        icon="icon-trash"
+        :iconLeft="true"
+        :text="$t('button.delete_sponsor')"
         variant="delete"
         @click="deleteSponsor"
         :loading
       />
-      <BaseButton 
-        icon="icon-file" 
-        :iconLeft="true" 
-        text="Saqlash" 
+      <BaseButton
+        icon="icon-file"
+        :iconLeft="true"
+        :text="$t('button.save')"
         variant="primary"
         :loading
       />
@@ -239,7 +249,7 @@
   </CModal>
 
   <!-- sponsor add -->
-  <CModal title="Homiy qo‘shish" :show="sponsorAddModalActive" @close="sponsorAddModalToggle">
+  <CModal :title="$t('add_sponsor')" :show="sponsorAddModalActive" @close="sponsorAddModalToggle">
     <template #content>
       <!-- name -->
       <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
@@ -252,7 +262,7 @@
       </FormGroup>
 
       <!-- amount -->
-      <FormGroup label="Homiylik summasi" id="amount">
+      <FormGroup :label="$t('label.sponsorship_amount')" id="amount">
         <FormSelect
           v-model:model-value="form.sponsor.sponsoring"
           :selectedVal="form.sponsor.sponsoring.name"
@@ -262,7 +272,13 @@
     </template>
 
     <template #footer>
-      <BaseButton icon="icon-add" :iconLeft="true" text="Qo‘shish" variant="primary" :loading />
+      <BaseButton
+        icon="icon-add"
+        :iconLeft="true"
+        :text="$t('button.add')"
+        variant="primary"
+        :loading
+      />
     </template>
   </CModal>
 </template>
@@ -290,37 +306,37 @@ const route = useRoute();
 const studentsStore = useStudentsStore();
 const student = computed(() => studentsStore.student);
 const studentSponsors = computed(() => studentsStore.studentSponsors);
-const loading = computed(() => studentsStore.loading)
+const loading = computed(() => studentsStore.loading);
 
-const getSponsorInfo = (sponsor: { id: number, sponsor: { full_name: string }, summa: number}) => {
-
+const getSponsorInfo = (sponsor: { id: number; sponsor: { full_name: string }; summa: number }) => {
   form.sponsor.id = sponsor.id;
   form.sponsor.name = sponsor.sponsor.full_name;
   form.sponsor.sum = sponsor.summa;
 
-  sponsorEditModalToggle(true)
-}
+  sponsorEditModalToggle(true);
+};
 const updateStudent = () => {
   const updatedStudent = {
     full_name: form.student.name,
     phone: form.student.phone,
     institute: `${form.student.institute.id}`,
-    given: form.student.given.value,
-  }
+    given: form.student.given.value
+  };
 
-  studentsStore.updateStudent(student.value?.id, updatedStudent)
+  studentsStore
+    .updateStudent(student.value?.id, updatedStudent)
     .then(() => studentEditModalToggle(false))
-    .finally(() => studentsStore.getStudentDetail(route.params.id))
-}
+    .finally(() => studentsStore.getStudentDetail(route.params.id));
+};
 const deleteStudent = () => {
-  studentsStore.deleteStudent(student.value?.id)
-    .then(() => router.push({ name: 'MainStudents' }))
-}
+  studentsStore.deleteStudent(student.value?.id).then(() => router.push({ name: 'MainStudents' }));
+};
 const deleteSponsor = () => {
-  studentsStore.deleteSponsor(form.sponsor.id)
+  studentsStore
+    .deleteSponsor(form.sponsor.id)
     .then(() => sponsorEditModalToggle(false))
-    .then(() => studentsStore.getStudentSponsors(route.params.id))
-}
+    .then(() => studentsStore.getStudentSponsors(route.params.id));
+};
 
 const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar'];
 
@@ -346,7 +362,7 @@ const form = reactive({
     phone: null,
     institute: {
       id: null,
-      name: null,
+      name: null
     },
     contract: null,
     given: {
@@ -359,7 +375,7 @@ const form = reactive({
     full_name: null,
     sponsoring: {
       name: 'Barchasi',
-      sum: null,
+      sum: null
     }
   }
 });
@@ -386,13 +402,15 @@ watch(
     institutesStore.getInstitutesList();
   },
   { immediate: true }
-)
+);
 
 const studentEditModalActive = ref<boolean>(false);
 const sponsorEditModalActive = ref<boolean>(false);
 const sponsorAddModalActive = ref<boolean>(false);
 
-const studentEditModalToggle = (val: boolean = true): boolean => studentEditModalActive.value = val;
-const sponsorEditModalToggle = (val: boolean = true): boolean => sponsorEditModalActive.value = val;
-const sponsorAddModalToggle = (val: boolean = true): boolean => sponsorAddModalActive.value = val;
+const studentEditModalToggle = (val: boolean = true): boolean =>
+  (studentEditModalActive.value = val);
+const sponsorEditModalToggle = (val: boolean = true): boolean =>
+  (sponsorEditModalActive.value = val);
+const sponsorAddModalToggle = (val: boolean = true): boolean => (sponsorAddModalActive.value = val);
 </script>

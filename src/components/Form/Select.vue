@@ -3,9 +3,10 @@
     class="relative border border-sky bg-sky/20 rounded-md p-2.5 cursor-pointer"
     :class="[{ '!border-blue': selectActive }, { '!border-red': error }, wrapperClass]"
     @click="toggleSelectActive"
+    ref="select"
   >
     <!-- select -->
-    <div class="w-full flex-y-center justify-between" :class="selectClass">
+    <div class="w-full flex-y-center justify-between gap-2" :class="selectClass">
       <p class="text-sm text-blue-700 font-normal">{{ model.name }}</p>
       <i
         class="icon-chevron-down text-gray transition duration-300"

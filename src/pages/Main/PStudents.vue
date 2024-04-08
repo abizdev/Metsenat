@@ -6,7 +6,7 @@
       <BaseButton 
         icon="icon-add"
         :iconLeft="true"
-        text="Talaba qo‘shish"
+        :text="$t('button.add_student')"
         variant="primary"
       />
     </RouterLink>
@@ -58,10 +58,10 @@
     </table>
   </div>
 
-  <CModal title="filter" :show="showModal" @close="toggleModal">
+  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal">
     <template #content>
       <!-- status -->
-      <FormGroup label="Talabalik turi" id="status">
+      <FormGroup :label="$t('label.student_type')" id="status">
         <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType" />
       </FormGroup>
 
@@ -82,7 +82,7 @@
         icon="icon-eye"
         :iconLeft="true"
         variant="primary"
-        text="Natijalarni ko‘rish"
+        :text="$t('button.show_results')"
         @click="toggleModal(false)"
       />
     </template>

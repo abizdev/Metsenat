@@ -6,11 +6,11 @@
     <div class="flex flex-col bg-white rounded-xl p-8 w-198 border border-blue-50">
       <!-- title -->
       <div class="flex-y-center justify-between">
-        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">Homiy haqida</h3>
+        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">{{ $t('about_sponsor') }}</h3>
         <BaseButton
           icon="icon-edit"
           :iconLeft="true"
-          text="Tahrirlash"
+          :text="$t('edit')"
           variant="secondary"
           @click="toggleModalActive(true)"
         />
@@ -30,13 +30,13 @@
       <div class="grid grid-cols-2 mt-6">
         <!-- phone -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">telefon raqam</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('phone') }}</h6>
           <p class="text-md text-black">{{ formatPhone(sponsor?.phone) }}</p>
         </div>
 
         <!-- sum -->
         <div class="col-span-1 flex flex-col gap-3">
-          <h6 class="text-xs text-gray uppercase">Homiylik summasi</h6>
+          <h6 class="text-xs text-gray uppercase">{{ $t('label.sponsorship_amount') }}</h6>
           <p class="text-md text-black uppercase">{{ formatNumbers(sponsor?.sum) }} uzs</p>
         </div>
       </div>
@@ -54,14 +54,14 @@
           :class="{ '!bg-blue text-white hover:!bg-blue-500': !sponsor?.is_legal }"
           :disabled="sponsor?.is_legal"
         >
-          Jismoniy shaxs
+          {{ $t('physical_person') }}
         </button>
         <button
           class="flex-grow tracking-wide leading-3 py-3.5 bg-white text-blue/60 text-xs uppercase hover:bg-slate-50 transition duration-150 disabled:cursor-not-allowed"
           :class="{ '!bg-blue text-white hover:!bg-blue-500': sponsor?.is_legal }"
           :disabled="!sponsor?.is_legal"
         >
-          Yuridik shaxs
+          {{ $t('legal_entity') }}
         </button>
       </div>
 
@@ -80,7 +80,7 @@
         </FormGroup>
 
         <!-- phone -->
-        <FormGroup id="phone" label="Telefon raqam">
+        <FormGroup id="phone" :label="$t('phone')">
           <FormInput
             id="phone"
             type="text"
@@ -97,7 +97,7 @@
         </FormGroup>
 
         <!-- status -->
-        <FormGroup label="Holati" id="status">
+        <FormGroup :label="$t('label.status')" id="status">
           <FormSelect
             v-model:model-value="formLegal.status"
             :selectedVal="formLegal.status.name"
@@ -107,7 +107,7 @@
         </FormGroup>
 
         <!-- amount -->
-        <FormGroup label="Homiylik summasi" id="amount">
+        <FormGroup :label="$t('label.sponsorship_amount')" id="amount">
           <FormSelect
             v-model:model-value="formLegal.amount"
             :selectedVal="formLegal.amount.name"
@@ -116,7 +116,7 @@
         </FormGroup>
 
         <!-- payment_type -->
-        <FormGroup label="To‘lov turi" id="payment_type">
+        <FormGroup :label="$t('payment_type')" id="payment_type">
           <FormSelect
             v-model:model-value="formLegal.payment_type"
             :selectedVal="formLegal.payment_type.name"
@@ -126,11 +126,11 @@
         </FormGroup>
 
         <!-- firm -->
-        <FormGroup id="firm" label="Tashkilot nomi">
+        <FormGroup id="firm" :label="$t('label.organization')">
           <FormInput
             id="firm"
             type="text"
-            placeholder="Tashkilot nomi"
+            :placeholder="$t('label.organization')"
             v-model="formLegal.firm"
             wrapperClass="h-10.5"
             :error="v$.formLegal.value.firm.$error"
@@ -152,7 +152,7 @@
         </FormGroup>
 
         <!-- phone -->
-        <FormGroup id="phone" label="Telefon raqam">
+        <FormGroup id="phone" :label="$t('phone')">
           <FormInput
             id="phone"
             type="text"
@@ -168,7 +168,7 @@
         </FormGroup>
 
         <!-- status -->
-        <FormGroup label="Holati" id="status">
+        <FormGroup :label="$t('label.status')" id="status">
           <FormSelect
             v-model:model-value="form.status"
             :selectedVal="form.status.name"
@@ -178,7 +178,7 @@
         </FormGroup>
 
         <!-- amount -->
-        <FormGroup label="Homiylik summasi" id="amount">
+        <FormGroup :label="$t('label.sponsorship_amount')" id="amount">
           <FormSelect
             v-model:model-value="form.amount"
             :selectedVal="form.amount.name"
@@ -187,7 +187,7 @@
         </FormGroup>
 
         <!-- payment_type -->
-        <FormGroup label="To‘lov turi" id="payment_type">
+        <FormGroup :label="$t('label.payment_type')" id="payment_type">
           <FormSelect
             v-model:model-value="form.payment_type"
             :selectedVal="form.payment_type.name"
@@ -202,7 +202,7 @@
         icon="icon-file"
         :icon-left="true"
         :loading
-        text="Saqlash"
+        :text="$t('button.save')"
         variant="primary"
         @click="submit"
       />

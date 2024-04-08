@@ -49,15 +49,15 @@
     </table>
   </div>
 
-  <CModal title="filter" :show="showModal" @close="toggleModal">
+  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal">
     <template #content>
       <!-- status -->
-      <FormGroup label="Ariza holati" id="status">
+      <FormGroup :label="$t('label.application_status')" id="status">
         <FormSelect v-model:model-value="form.status" :options :selectedVal="form.status.name"/>
       </FormGroup>
 
       <!-- sponsored sum -->
-      <FormGroup label="Homiylik summasi" id="sponsored_sum">
+      <FormGroup :label="$t('label.sponsorship_amount')" id="sponsored_sum">
         <div class="grid grid-cols-4 gap-3">
           <FormRadio
             v-for="(item, key) in sponsoringSum"
@@ -69,7 +69,7 @@
       </FormGroup>
 
       <!-- calendar -->
-      <FormGroup label="Homiylik summasi" id="Sana">
+      <FormGroup :label="$t('label.date')" id="Sana">
         <div class="relative self-start">
           <VDatePicker 
             v-model.range="range" 
@@ -90,13 +90,13 @@
         icon="icon-eye"
         :iconLeft="true"
         variant="outline"
-        text="Tozalash"
+        :text="$t('button.clear')"
       />
       <BaseButton 
         icon="icon-eye"
         :iconLeft="true"
         variant="primary"
-        text="Natijalarni ko‘rish"
+        :text="$t('button.show_results')"
         @click="toggleModal(false)"
       />
     </template>

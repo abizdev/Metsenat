@@ -1,5 +1,5 @@
 <template>
-  <Banner userType="new-student" title="Talaba qo‘shish" />
+  <Banner userType="new-student" :title="$t('button.add_student')" />
   <section>
     <form
       @submit.prevent="submit"
@@ -17,7 +17,7 @@
       </FormGroup>
 
       <!-- phone -->
-      <FormGroup id="phone" label="Telefon raqam">
+      <FormGroup id="phone" :label="$t('phone')">
         <FormInput
           id="phone"
           type="text"
@@ -44,7 +44,7 @@
       </FormGroup>
 
       <!-- status -->
-      <FormGroup label="Talabalik turi" id="status">
+      <FormGroup :label="$t('label.student_type')" id="status">
         <FormSelect
           v-model="form.status"
           :selectedVal="form.status.name"
@@ -54,11 +54,11 @@
       </FormGroup>
 
       <!-- contract -->
-      <FormGroup id="contract" label="Kontrakt summa">
+      <FormGroup id="contract" :label="$t('label.sponsorship_amount')">
         <FormInput
           id="contract"
           type="text"
-          placeholder="Summani kiriting"
+          :placeholder="$t('enter_sum')"
           v-model="form.contract"
           :error="v$.contract.$error"
         />
@@ -68,7 +68,7 @@
         <BaseButton
           icon="icon-add"
           :iconLeft="true"
-          text="Qo‘shish"
+          :text="$t('button.add')"
           variant="primary"
           type="submit"
           :loading
@@ -99,8 +99,12 @@ institutesStore.getInstitutesList();
 
 const studentsStore = useStudentsStore();
 const loading = computed({
-  get() { return studentsStore.loading },
-  set(val) { loading.value = val }
+  get() {
+    return studentsStore.loading;
+  },
+  set(val) {
+    loading.value = val;
+  }
 });
 
 const router = useRouter();

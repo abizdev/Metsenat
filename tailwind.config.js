@@ -62,6 +62,9 @@ export default {
       top: {
         70: '280px'
       },
+      boxShadow: {
+        '2xl': '0 25px 40px 0 rgba(0, 0, 0, 0.03)',
+      }
     },
   },
   plugins: [],

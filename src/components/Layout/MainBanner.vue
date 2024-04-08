@@ -19,7 +19,7 @@
       <div class="flex-center gap-5">
         <FormInput
           id="search"
-          placeholder="Izlash"
+          :placeholder="$t('search')"
           type="search"
           variant="primary"
           wrapperClass="!bg-gray-100 border-transparent !py-2.5 !w-71"
@@ -33,7 +33,7 @@
         <BaseButton 
           icon="icon-filter"
           :iconLeft="true"
-          text="Filter"
+          :text="$t('filter')"
           variant="secondary"
           wrapperClass="py-2.5 !w-30"
           @click="openModal"
@@ -58,15 +58,15 @@ const emit = defineEmits<Emits>()
 const navlinks = [
   {
     name: 'MainDashboard',
-    text: 'Dashboard',
+    text: 'Dashboard' // $t('dashboard'),
   },
   {
     name: 'MainSponsors',
-    text: 'Homiylar',
+    text: 'Homiylar' // $t('sponsors'),
   },
   {
     name: 'MainStudents',
-    text: 'Talabalar',
+    text: 'Talabalar' // $t('students'),
   },
 
 ]

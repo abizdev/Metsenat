@@ -3,7 +3,7 @@
     <div class="flex-y-center justify-between container py-6">
       <div class="flex-center gap-3">
         <RouterLink :to="{ name: backLink }">
-          <i class="icon-arrow-left"></i>
+          <i class="icon-arrow-left hover:text-gray-500 transition-300"></i>
         </RouterLink>
         <h2 class="text-2xl text-black font-[sf-pro-display]">{{ titleText }}</h2>
         <span class="text-xs font-normal rounded-md py-1.5 px-3" :class="userStatusDisplay(user?.get_status_display)" v-if="userType === 'sponsor'">{{ user?.get_status_display }}</span>
