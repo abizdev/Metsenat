@@ -10,7 +10,7 @@
         <p class="text-sm text-black font-normal">{{ $t('to_show') }}</p>
         <FormSelect
           v-model="page.size"
-          :options="pageSizes" 
+          :options="pageSizes"
           wrapperClass="bg-white !py-2"
           selectClass="gap-2"
           :selectedVal="page.size.name"

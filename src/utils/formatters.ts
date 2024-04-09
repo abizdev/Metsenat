@@ -18,3 +18,8 @@ export const formatPhone = (phone: string): string => {
 export const formatNumbers = (sum: number | undefined) => {
   return sum?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
+
+export const formatStudentType = (val) => {
+  console.log(typeof val)
+  return val == 1 ? 'Bakalavr' : 'Magistr'
+}

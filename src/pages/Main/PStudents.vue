@@ -37,7 +37,7 @@
         <template #content="{ user, key }">
           <td class="text-left w-4 text-sm text-black font-normal">{{ key + 1 }}</td>
           <td class="w-[222px] text-left text-sm text-black">{{ user?.full_name }}</td>
-          <td class="w-28 text-sm text-black">{{ user?.type }}</td>
+          <td class="w-28 text-sm text-black">{{ formatStudentType(user?.type) }}</td>
           <td class="w-50 text-xs text-black font-normal">{{ user?.institute?.name }}</td>
           <td class="w-[153px] text-sm text-black">
             {{ formatNumbers(user?.given) }} <span class="text-gray">UZS</span>
@@ -103,7 +103,7 @@ import { computed, reactive, ref, watch } from 'vue';
 import { useStudentsStore } from '@/stores/students';
 import { useInstitutesStore } from '@/stores/institute';
 
-import { formatNumbers } from '@/utils/formatters';
+import { formatNumbers, formatStudentType } from '@/utils/formatters';
 
 const tableHead: string[] = [
   '#',

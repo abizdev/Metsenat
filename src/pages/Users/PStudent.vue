@@ -68,7 +68,7 @@
         <!-- degree -->
         <div class="col-span-1 flex flex-col gap-3">
           <h6 class="text-xs text-gray uppercase">{{ $t('label.student_type') }}</h6>
-          <p class="text-md text-black">{{ student?.type }}</p>
+          <p class="text-md text-black">{{ formatStudentType(student?.type) }}</p>
         </div>
 
         <!-- given sum -->
@@ -296,7 +296,7 @@ import FormGroup from '@/components/Form/Group.vue';
 import { computed, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { formatPhone, formatNumbers } from '@/utils/formatters';
+import { formatPhone, formatNumbers, formatStudentType } from '@/utils/formatters';
 import { useStudentsStore } from '@/stores/students';
 import { useInstitutesStore } from '@/stores/institute';
 import router from '@/router';
