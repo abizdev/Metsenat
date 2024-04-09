@@ -35,6 +35,9 @@ import MainBanner from '@/components/Layout/MainBanner.vue';
 import { computed } from 'vue'
 import { useDashboardStore } from '@/stores/dashboard'
 import { formatNumbers } from '@/utils/formatters';
+import { useI18n } from 'vue-i18n';
+
+const i18n = useI18n()
 
 const dashboardStore = useDashboardStore()
 const totals = computed(() => dashboardStore.dashboardTotals)
@@ -44,11 +47,11 @@ dashboardStore.getDashboardTotals()
 // chart
 const series = [
   {
-    name: 'Homiylar', // $t('sponsors'),
+    name: `${i18n.t('sponsors')}`,
     data: [31, 40, 28, 51, 42, 109, 100],
   },
   {
-    name: 'Talabalar', // $t('students'),
+    name: `${i18n.t('students')}`,
     data: [11, 32, 45, 32, 34, 52, 41]
   },
 ]
@@ -76,9 +79,9 @@ const options = {
 
 const getTotalData = computed(() => (key: string) => {
   const titles = {
-    total_paid: "Jami to‘langan summa", // $t('total_payed'), 
-    total_need: "Jami so‘ralgan summa", // $t('total_need'), 
-    total_must_pay: "To‘lanishi kerak summa", // $t('total_must_pay'), 
+    total_paid: `${i18n.t('total_paid')}`,
+    total_need: `${i18n.t('total_need')}`,
+    total_must_pay: `${i18n.t('total_must_pay')}`,
   }
   
   const iconStyles = {

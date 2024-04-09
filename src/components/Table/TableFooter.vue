@@ -7,7 +7,7 @@
     <div class="flex-center gap-5">
       <!-- select pagination -->
       <div class="flex-center gap-3">
-        <p class="text-sm text-black font-normal">Ko‘rsatish</p>
+        <p class="text-sm text-black font-normal">{{ $t('to_show') }}</p>
         <FormSelect
           v-model="page.size"
           :options="pageSizes" 

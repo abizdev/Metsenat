@@ -58,11 +58,11 @@
     </table>
   </div>
 
-  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal">
+  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal" >
     <template #content>
       <!-- status -->
       <FormGroup :label="$t('label.student_type')" id="status">
-        <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType" />
+        <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType"/>
       </FormGroup>
 
       <!-- institutes -->
@@ -77,7 +77,7 @@
     </template>
 
     <template #footer>
-      <BaseButton icon="icon-eye" :iconLeft="true" variant="outline" text="Tozalash" />
+      <BaseButton icon="icon-eye" :iconLeft="true" variant="outline" :text="$t('button.clean')" />
       <BaseButton
         icon="icon-eye"
         :iconLeft="true"

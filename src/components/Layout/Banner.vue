@@ -12,7 +12,7 @@
       <BaseButton 
         icon="icon-add"
         :iconLeft="true"
-        text="Homiy qo‘shish"
+        :text="$t('add_sponsor')"
         variant="secondary"
         @click="emit('sponsorAddModalToggle', true)"
         v-if="userType === 'student'"

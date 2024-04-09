@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core'
 
 interface Props {
   wrapperClass?: string;
@@ -52,4 +53,11 @@ const selectActive = ref<boolean>(false);
 const setActiveOption = (val: any) => model.value = val;
 const toggleSelectActive = () => (selectActive.value = !selectActive.value);
 
+const select = ref()
+
+onClickOutside(select, (event) => {
+  if (!select.value.contains(event.target)) {
+    selectActive.value = false;
+  }
+})
 </script>

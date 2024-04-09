@@ -8,7 +8,7 @@
           v-for="(link, key) in navlinks"
           :key
           :to="{ name: link.name }"
-          class="text-xs text-blue/60 bg-white py-3.5 px-14"
+          class="text-xs text-blue/60 bg-white py-3.5 px-14 capitalize"
           :class="{ 'border-x border-sky-300': key === 1 }"
         >
           {{ link.text }}
@@ -47,7 +47,9 @@
 <script setup lang="ts">
 import FormInput from '@/components/Form/Input.vue'
 import BaseButton from '@/components/Base/Button.vue';
-import { reactive } from 'vue';
+
+import { computed, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 interface Emits {
   (e: 'openModal', value: boolean): void
@@ -55,21 +57,23 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const navlinks = [
+const i18n = useI18n()
+
+const navlinks = computed(() => [
   {
     name: 'MainDashboard',
-    text: 'Dashboard' // $t('dashboard'),
+    text: `${i18n.t('dashboard')}`
   },
   {
     name: 'MainSponsors',
-    text: 'Homiylar' // $t('sponsors'),
+    text: `${i18n.t('sponsors')}`
   },
   {
     name: 'MainStudents',
-    text: 'Talabalar' // $t('students'),
+    text: `${i18n.t('students')}`
   },
 
-]
+])
 
 const form = reactive({
   search: null

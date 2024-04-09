@@ -25,26 +25,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { watch, onMounted } from 'vue';
 
 interface Props {
   title: string,
   show: boolean,
 }
 interface Emits {
-  (e: 'close', value: boolean): void
+  (e: 'close', value: boolean): void,
 }
 
 const props = withDefaults(defineProps<Props>(), {
   show: false
 })
-
 const emit = defineEmits<Emits>()
 
 const closeModal = () => {
   emit('close', false)
 }
-
 
 onMounted(() => {
   document.addEventListener('keydown', (e) => {

@@ -45,7 +45,7 @@
     <img src="/images/bottom.png" class="w-205" alt="bottom" />
   </section>
 
-  <CModal title="Tahrirlash" :show="showModal" @close="toggleModalActive">
+  <CModal :title="$t('edit')" :show="showModal" @close="toggleModalActive">
     <template #content>
       <!-- modal toggler -->
       <div class="border border-sky rounded-md overflow-hidden flex-center">
@@ -338,5 +338,21 @@ watch(route.params.id, sponsorsStore.getSponsorDetail(route.params.id), { immedi
 
 const showModal = ref<boolean>(false);
 const toggleModalActive = (val: boolean) => (showModal.value = val);
+
+// const selectLegalStatus = ref()
+// const selectLegalSponsorship = ref()
+// const selectLegalPaymentType = ref()
+// const selectStatus = ref()
+// const selectSponsorship = ref()
+// const selectPaymentType = ref()
+// const contentCLick = () => {
+//   console.log(selectLegalStatus)
+//   selectLegalStatus.value.closeOnOuterClick(event)
+  // selectLegalSponsorship.value.closeOnOuterClick(event)
+  // selectLegalPaymentType.value.closeOnOuterClick(event)
+  // selectStatus.value.closeOnOuterClick(event)
+  // selectSponsorship.value.closeOnOuterClick(event)
+  // selectPaymentType.value.closeOnOuterClick(event)
+// }
 
 </script>
