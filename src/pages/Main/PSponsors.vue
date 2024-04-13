@@ -87,7 +87,7 @@
 
     <template #footer>
       <BaseButton 
-        icon="icon-eye"
+        icon="icon-clear"
         :iconLeft="true"
         variant="outline"
         :text="$t('button.clear')"

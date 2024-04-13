@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?v8bd27');
-  src:  url('fonts/icomoon.eot?v8bd27#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?v8bd27') format('truetype'),
-    url('fonts/icomoon.woff?v8bd27') format('woff'),
-    url('fonts/icomoon.svg?v8bd27#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?nzmhs8');
+  src:  url('fonts/icomoon.eot?nzmhs8#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?nzmhs8') format('truetype'),
+    url('fonts/icomoon.woff?nzmhs8') format('woff'),
+    url('fonts/icomoon.svg?nzmhs8#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -28,7 +28,7 @@
 .icon-chevron-down:before {
   content: "\e900";
 }
-.icon-eye:before {
+.icon-checkmark:before {
   content: "\e901";
 }
 .icon-xmark:before {
@@ -49,10 +49,10 @@
 .icon-arrow-left:before {
   content: "\e907";
 }
-.icon-trash:before {
+.icon-delete:before {
   content: "\e908";
 }
-.icon-filter:before {
+.icon-eye:before {
   content: "\e909";
 }
 .icon-cash:before {
@@ -68,8 +68,11 @@
   content: "\e90d";
 }
 .icon-user:before {
+  content: "\e90e";
+}
+.icon-clear:before {
   content: "\e90f";
 }
-.icon-checkmark:before {
+.icon-filter:before {
   content: "\e910";
 }
