@@ -30,7 +30,7 @@
       </FormGroup>
 
       <!-- reCaptcha -->
-      <VueRecaptcha @verify="handleReCaptcha" sitekey="6LfN96UpAAAAAEZoakt8EBLc7bRUrRad-2rigwMw" />
+      <VueRecaptcha @verify="handleReCaptcha" sitekey="6LeidsEpAAAAAL_ed3rndk7CW60inPt2qB6JesRb" />
 
       <BaseButton
         text="Kirish"
