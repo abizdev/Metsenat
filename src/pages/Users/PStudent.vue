@@ -22,7 +22,7 @@
             :iconLeft="true"
             :text="$t('edit')"
             variant="secondary"
-            @click="studentEditModalToggle"
+            @click="studentEditModalToggle(true)"
           />
         </div>
       </div>
@@ -102,7 +102,7 @@
       </div>
 
       <!-- table content -->
-      <table class="w-full mt-6" v-if="studentSponsors.length">
+      <table class="w-full mt-6" v-if="studentSponsors?.length">
         <TableHead :tableHead>
           <th
             v-for="(item, key) in tableHead"
@@ -249,7 +249,11 @@
   </CModal>
 
   <!-- sponsor add -->
-  <CModal :title="$t('add_sponsor')" :show="sponsorAddModalActive" @close="sponsorAddModalToggle">
+  <CModal
+    :title="$t('button.add_sponsor')"
+    :show="sponsorAddModalActive"
+    @close="sponsorAddModalToggle"
+  >
     <template #content>
       <!-- name -->
       <FormGroup id="name" label="F.I.Sh. (Familiya Ism Sharifingiz)">
@@ -284,14 +288,14 @@
 </template>
 
 <script setup lang="ts">
-import Banner from '@/components/Layout/Banner.vue';
-import BaseButton from '@/components/Base/Button.vue';
-import TableHead from '@/components/Table/TableHead.vue';
-import TableBody from '@/components/Table/TableBody.vue';
+import Banner from '@/components/Layout/CBanner.vue';
+import BaseButton from '@/components/Base/CButton.vue';
+import TableHead from '@/components/Table/CTableHead.vue';
+import TableBody from '@/components/Table/CTableBody.vue';
 import CModal from '@/components/Common/CModal.vue';
-import FormInput from '@/components/Form/Input.vue';
-import FormSelect from '@/components/Form/Select.vue';
-import FormGroup from '@/components/Form/Group.vue';
+import FormInput from '@/components/Form/CInput.vue';
+import FormSelect from '@/components/Form/CSelect.vue';
+import FormGroup from '@/components/Form/CGroup.vue';
 
 import { computed, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -300,6 +304,7 @@ import { formatPhone, formatNumbers, formatStudentType } from '@/utils/formatter
 import { useStudentsStore } from '@/stores/students';
 import { useInstitutesStore } from '@/stores/institute';
 import router from '@/router';
+import { onMounted } from 'vue';
 
 const route = useRoute();
 
@@ -326,16 +331,18 @@ const updateStudent = () => {
   studentsStore
     .updateStudent(student.value?.id, updatedStudent)
     .then(() => studentEditModalToggle(false))
-    .finally(() => studentsStore.getStudentDetail(route.params.id));
+    .finally(() => studentsStore.getStudentDetail(student.value.id));
 };
+
 const deleteStudent = () => {
   studentsStore.deleteStudent(student.value?.id).then(() => router.push({ name: 'MainStudents' }));
 };
+
 const deleteSponsor = () => {
   studentsStore
     .deleteSponsor(form.sponsor.id)
     .then(() => sponsorEditModalToggle(false))
-    .then(() => studentsStore.getStudentSponsors(route.params.id));
+    .then(() => studentsStore.getStudentSponsors(student.value.id));
 };
 
 const tableHead = ['#', 'f.i.sh', 'Ajratilingan summa', 'Amallar'];
@@ -356,7 +363,7 @@ const options = reactive({
   ]
 });
 
-const form = reactive({
+const form = reactive<any>({
   student: {
     name: null,
     phone: null,
@@ -394,23 +401,40 @@ watch(
 );
 
 // fetch data
-watch(
-  () => route.params.id,
-  () => {
-    studentsStore.getStudentDetail(route.params.id);
-    studentsStore.getStudentSponsors(route.params.id);
-    institutesStore.getInstitutesList();
-  },
-  { immediate: true }
-);
+onMounted(() => {
+  studentsStore.getStudentDetail(route.params.id);
+  studentsStore.getStudentSponsors(route.params.id);
+  institutesStore.getInstitutesList();
+});
 
 const studentEditModalActive = ref<boolean>(false);
 const sponsorEditModalActive = ref<boolean>(false);
 const sponsorAddModalActive = ref<boolean>(false);
 
-const studentEditModalToggle = (val: boolean = true): boolean =>
-  (studentEditModalActive.value = val);
+const studentEditModalToggle = (val: boolean = true): void => {
+  resetStudentEditModal();
+  studentEditModalActive.value = val;
+};
+
 const sponsorEditModalToggle = (val: boolean = true): boolean =>
   (sponsorEditModalActive.value = val);
-const sponsorAddModalToggle = (val: boolean = true): boolean => (sponsorAddModalActive.value = val);
+
+const sponsorAddModalToggle = (val: boolean = true): void => {
+  resetSponsorAddModal();
+  sponsorAddModalActive.value = val;
+};
+
+const resetStudentEditModal = () => {
+  form.student.name = student.value?.full_name;
+  form.student.phone = formatPhone(student.value?.phone);
+  form.student.institute = student.value?.institute;
+  form.student.contract = formatNumbers(student.value?.contract);
+  form.student.given.name = formatNumbers(student.value?.given);
+};
+
+const resetSponsorAddModal = () => {
+  form.sponsor.id = null;
+  form.sponsor.full_name = null;
+  form.sponsor.sponsoring = { name: 'Barchasi', sum: null };
+};
 </script>

@@ -1,15 +1,14 @@
 <template>
   <div class="bg-white py-6">
     <div class="flex-y-center justify-between container">
-
       <!-- navigation -->
-      <div class="flex-center border border-sky-300 rounded-md overflow-hidden">
-        <RouterLink 
+      <div class="flex-center border-2 border-sky rounded-md overflow-hidden">
+        <RouterLink
           v-for="(link, key) in navlinks"
           :key
           :to="{ name: link.name }"
-          class="text-xs text-blue/60 bg-white py-3.5 px-14 capitalize"
-          :class="{ 'border-x border-sky-300': key === 1 }"
+          class="text-xs text-blue/60 bg-white py-3.5 px-14 capitalize hover:bg-slate-100 transition-all"
+          :class="{ 'border-x-2  border-sky': key === 1 }"
         >
           {{ link.text }}
         </RouterLink>
@@ -30,7 +29,7 @@
           </template>
         </FormInput>
 
-        <BaseButton 
+        <BaseButton
           icon="icon-filter"
           :iconLeft="true"
           :text="$t('filter')"
@@ -39,25 +38,24 @@
           @click="openModal"
         />
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormInput from '@/components/Form/Input.vue'
-import BaseButton from '@/components/Base/Button.vue';
+import FormInput from '@/components/Form/CInput.vue';
+import BaseButton from '@/components/Base/CButton.vue';
 
 import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 interface Emits {
-  (e: 'openModal', value: boolean): void
+  (e: 'openModal', value: boolean): void;
 }
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<Emits>();
 
-const i18n = useI18n()
+const i18n = useI18n();
 
 const navlinks = computed(() => [
   {
@@ -71,19 +69,18 @@ const navlinks = computed(() => [
   {
     name: 'MainStudents',
     text: `${i18n.t('students')}`
-  },
-
-])
+  }
+]);
 
 const form = reactive({
   search: null
-})
+});
 
-const openModal = () => emit('openModal', true)
+const openModal = () => emit('openModal', true);
 </script>
 
 <style scoped>
 .router-link-active {
-  @apply bg-blue text-white transition duration-300
+  @apply bg-blue text-white transition duration-300;
 }
 </style>

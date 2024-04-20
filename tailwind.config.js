@@ -50,7 +50,11 @@ export default {
       },
       height: {
         '10.5': '42px',
-        13: '52px'
+        13: '52px',
+        15: '60px',
+      },
+      maxHeight: {
+        50: '200px'
       },
       maxWidth: {
         '146.5': '586px',

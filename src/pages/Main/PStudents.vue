@@ -1,9 +1,9 @@
 <template>
   <MainBanner @open-modal="toggleModal" />
 
-  <div class="container mt-7 mb-20 flex flex-col">
+  <div class="container mt-7 mb-32 flex flex-col">
     <RouterLink :to="{ name: 'NewStudent' }" class="mb-7 self-end">
-      <BaseButton 
+      <BaseButton
         icon="icon-add"
         :iconLeft="true"
         :text="$t('button.add_student')"
@@ -54,15 +54,15 @@
         </template>
       </TableBody>
 
-      <TableFooter @change-current-page="getList" />
+      <TableFooter @change-current-page="getList" :page-length="studentsList.length" />
     </table>
   </div>
 
-  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal" >
+  <CModal :title="$t('filter')" :show="showModal" @close="toggleModal">
     <template #content>
       <!-- status -->
       <FormGroup :label="$t('label.student_type')" id="status">
-        <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType"/>
+        <FormSelect v-model="form.status" :selectedVal="form.status.name" :options="studentsType" />
       </FormGroup>
 
       <!-- institutes -->
@@ -77,7 +77,14 @@
     </template>
 
     <template #footer>
-      <BaseButton icon="icon-eye" :iconLeft="true" variant="outline" :text="$t('button.clean')" />
+      <BaseButton
+        icon="icon-clear"
+        :iconLeft="true"
+        variant="outline"
+        :text="$t('button.clear')"
+        @click="resetModal"
+      />
+
       <BaseButton
         icon="icon-eye"
         :iconLeft="true"
@@ -90,13 +97,13 @@
 </template>
 
 <script setup lang="ts">
-import MainBanner from '@/components/Layout/MainBanner.vue';
-import TableHead from '@/components/Table/TableHead.vue';
-import TableBody from '@/components/Table/TableBody.vue';
-import TableFooter from '@/components/Table/TableFooter.vue';
-import FormSelect from '@/components/Form/Select.vue';
-import FormGroup from '@/components/Form/Group.vue';
-import BaseButton from '@/components/Base/Button.vue';
+import MainBanner from '@/components/Layout/CMainBanner.vue';
+import TableHead from '@/components/Table/CTableHead.vue';
+import TableBody from '@/components/Table/CTableBody.vue';
+import TableFooter from '@/components/Table/CTableFooter.vue';
+import FormSelect from '@/components/Form/CSelect.vue';
+import FormGroup from '@/components/Form/CGroup.vue';
+import BaseButton from '@/components/Base/CButton.vue';
 import CModal from '@/components/Common/CModal.vue';
 
 import { computed, reactive, ref, watch } from 'vue';
@@ -116,7 +123,7 @@ const tableHead: string[] = [
 ];
 
 const studentsStore = useStudentsStore();
-const studentsList = computed(() => studentsStore.studentsList);
+const studentsList = computed(() => studentsStore.studentsList ?? '');
 studentsStore.getStudentsList();
 
 const getList = (current: number, size: number) => studentsStore.getStudentsList(current, size);
@@ -131,7 +138,7 @@ const studentsType = [
   { id: Math.random(), name: 'Magistr' }
 ];
 
-const form = reactive({
+const form = reactive<any>({
   status: {
     name: studentsType[0].name
   },
@@ -142,10 +149,18 @@ const form = reactive({
 
 watch(
   () => institutesList,
-  (newVal) => (form.institute = newVal.value[0]),
+  (newVal: any) => (form.institute = newVal?.value[0]),
   { deep: true }
 );
 
 const showModal = ref<boolean>(false);
-const toggleModal = (val: boolean) => (showModal.value = val);
+const toggleModal = (val: boolean) => {
+  resetModal();
+  showModal.value = val;
+};
+
+const resetModal = () => {
+  form.status.name = studentsType[0].name;
+  form.institute.name = institutesList?.value[0].name;
+};
 </script>

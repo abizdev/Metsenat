@@ -45,9 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import FormGroup from '@/components/Form/Group.vue';
-import FormInput from '@/components/Form/Input.vue';
-import BaseButton from '@/components/Base/Button.vue';
+import FormGroup from '@/components/Form/CGroup.vue';
+import FormInput from '@/components/Form/CInput.vue';
+import BaseButton from '@/components/Base/CButton.vue';
 
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
@@ -62,8 +62,8 @@ const router = useRouter();
 const loading = ref(false);
 
 const form = reactive({
-  login: '', // 'metsenatadmin',
-  password: '', // 'uF9aH1vZ3bV2kN2y'
+  login: 'metsenatadmin', // 'metsenatadmin',
+  password: 'uF9aH1vZ3bV2kN2y', // 'uF9aH1vZ3bV2kN2y'
   reCaptcha: false
 });
 const rules = {
@@ -82,7 +82,7 @@ const submitForm = async () => {
   const result = await v$.value.$validate();
 
   if (!result) {
-    loading.value = false
+    loading.value = false;
     return;
   }
 

@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     meta: {
       layout: 'auth'
@@ -8,8 +8,9 @@ const routes = [
     component: () => import('@/pages/Auth/PLogin.vue')
   },
   {
-    path: '/main',
+    path: '/',
     name: 'Main',
+    redirect: '/dashboard',
     meta: {
       layout: 'default'
     },
@@ -33,7 +34,7 @@ const routes = [
         component: () => import('@/pages/Main/PStudents.vue')
       },
     ],
-    component: () => import('@/pages/index.vue')
+    component: () => import('@/pages/PIndex.vue')
   },
   {
     path: '/sponsor/:id',
@@ -48,7 +49,7 @@ const routes = [
   {
     path: '/create-student/',
     name: 'NewStudent',
-    component: () => import('@/pages/NewStudent.vue')
+    component: () => import('@/pages/PNewStudent.vue')
   }
 ]
 

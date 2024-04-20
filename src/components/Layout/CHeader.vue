@@ -6,7 +6,11 @@
       </RouterLink>
 
       <div class="flex-center gap-10">
-        <FormSelect v-model="selectedOption.lang" :selectedVal="selectedOption.lang.name" :options />
+        <FormSelect
+          v-model="selectedOption.lang"
+          :selectedVal="selectedOption.lang.name"
+          :options
+        />
 
         <RouterLink
           to="#!"
@@ -27,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import FormSelect from '../Form/Select.vue';
+import FormSelect from '../Form/CSelect.vue';
 
 import { reactive, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -42,7 +46,7 @@ const logout = () => {
   localStorage.clear();
 };
 
-const { locale } = useI18n()
+const { locale } = useI18n();
 
 const options = [
   { id: Math.random(), name: 'uz', value: 'uz' },
@@ -54,22 +58,23 @@ const selectedOption = reactive({
   lang: { id: Math.random(), name: 'uz', value: 'uz' }
 });
 
-const swhitchLang = (lang: { id: number, name: string, value: string }) => {
-  locale.value = lang.value
-  localStorage.locale = JSON.stringify(lang)
+const swhitchLang = (lang: { id: number; name: string; value: string }) => {
+  locale.value = lang.value;
+  localStorage.locale = JSON.stringify(lang);
 
-  i18n.global.locale.value = lang.value
-}
+  i18n.global.locale.value = lang.value;
+};
 
 watch(
   () => selectedOption.lang,
   (newVal) => swhitchLang(newVal)
-)
+);
 // console.log(selectedOption)
 onMounted(() => {
   if (localStorage.locale) {
-    selectedOption.lang = JSON.parse(localStorage.locale)
-    i18n.global.locale.value = selectedOption.lang.value
+    selectedOption.lang = JSON.parse(localStorage.locale);
+    i18n.global.locale.value = selectedOption.lang.value;
   }
-})
+});
 </script>
+../Form/CSelect.vue

@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ list: any, wrapperClass?: string }>()
+defineProps<{ list: any; wrapperClass?: string }>();
 </script>

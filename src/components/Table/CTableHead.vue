@@ -7,11 +7,10 @@
 </template>
 
 <script setup lang="ts">
-
 interface Props {
-  tableHead: string[],
-  thClass?: string
+  tableHead: string[];
+  thClass?: string;
 }
 
-defineProps<Props>()
+defineProps<Props>();
 </script>

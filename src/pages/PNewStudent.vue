@@ -2,7 +2,7 @@
   <Banner userType="new-student" :title="$t('button.add_student')" />
   <section>
     <form
-      @submit.prevent="submit"
+      @submit.prevent
       class="grid grid-cols-2 gap-7 bg-white max-w-197.5 w-full border border-blue-50 mt-10 mx-auto p-7 rounded-xl"
     >
       <!-- name -->
@@ -72,6 +72,7 @@
           variant="primary"
           type="submit"
           :loading
+          @click="submit"
         />
       </div>
     </form>
@@ -79,16 +80,16 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '@/components/Base/Button.vue';
-import Banner from '@/components/Layout/Banner.vue';
-import FormInput from '@/components/Form/Input.vue';
-import FormGroup from '@/components/Form/Group.vue';
-import FormSelect from '@/components/Form/Select.vue';
+import BaseButton from '@/components/Base/CButton.vue';
+import Banner from '@/components/Layout/CBanner.vue';
+import FormInput from '@/components/Form/CInput.vue';
+import FormGroup from '@/components/Form/CGroup.vue';
+import FormSelect from '@/components/Form/CSelect.vue';
 
 import { reactive, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
-import { required, alpha, numeric, integer } from '@vuelidate/validators';
+import { required, alpha, integer, maxLength, numeric } from '@vuelidate/validators';
 
 import { useInstitutesStore } from '@/stores/institute';
 import { useStudentsStore } from '@/stores/students';
@@ -98,11 +99,13 @@ const institutesList = computed(() => institutesStore.institutesList);
 institutesStore.getInstitutesList();
 
 const studentsStore = useStudentsStore();
+
 const loading = computed({
   get() {
     return studentsStore.loading;
   },
   set(val) {
+    console.log('loading', val);
     loading.value = val;
   }
 });
@@ -116,20 +119,22 @@ const options = {
   ]
 };
 
-const form = reactive({
+const form = reactive<any>({
   name: null,
   phone: null,
   contract: null,
   institute: { name: null },
-  status: { name: options.studentsType[0].name, value: 3 }
+  status: { name: options.studentsType[0].name, value: 1 }
 });
+
 const rules = {
   name: { required, alpha },
-  phone: { required, numeric },
-  contract: { required, integer },
+  phone: { required },
+  contract: { required, numeric, integer, maxLength },
   institute: { required },
   status: { required }
 };
+
 const v$ = useVuelidate(rules, form);
 
 const submit = async () => {
@@ -150,13 +155,13 @@ const submit = async () => {
 
   studentsStore.createStudent(student).then(() => {
     v$.value.$reset();
+    loading.value = false;
     router.push({ name: 'MainStudents' });
   });
 };
 
 watch(
   () => institutesList,
-  (newVal) => (form.institute = newVal.value[0]),
-  { deep: true }
+  (newVal) => (form.institute = newVal.value[0])
 );
 </script>

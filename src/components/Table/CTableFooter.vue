@@ -36,7 +36,6 @@
           <template #next-button>
             <i class="icon-chevron-right text-gray text-xs"></i>
           </template>
-
         </vue-awesome-paginate>
       </div>
     </div>
@@ -44,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import FormSelect from '../Form/Select.vue';
+import FormSelect from '../Form/CSelect.vue';
 
 import { reactive, watch } from 'vue';
 
@@ -53,7 +52,10 @@ interface Page {
   size: { name: number };
   startCount: number;
   endCount: number;
+  usersCount: number;
 }
+
+const props = defineProps<{ pageLength: number }>();
 
 const emit = defineEmits<{
   (e: 'changeCurrentPage', current: number, size: number): void;
@@ -64,18 +66,21 @@ const page = reactive<Page>({
   size: { name: 10 },
   startCount: 1,
   endCount: 10,
+  usersCount: 0
 });
+
 const pageSizes = [
-  { id: Math.random(), name: 3 },
-  { id: Math.random(), name: 7 },
   { id: Math.random(), name: 10 },
-]
+  { id: Math.random(), name: 20 },
+  { id: Math.random(), name: 30 }
+];
 
 const selectedPage = (selectedPage: number): number => (page.current = selectedPage);
 
 const calcCurrentList = (action: string, current: number) => {
-  page.endCount = page.current * 10
-  page.startCount = action === 'increase' ? current + 10 - 1  : page.startCount - 10;
+  page.endCount = page.current * page.size.name;
+  page.startCount =
+    action === 'increase' ? current + page.size.name - 1 : page.startCount - page.size.name;
 };
 
 watch(
@@ -89,23 +94,26 @@ watch(
     emit('changeCurrentPage', page.current, page.size.name);
   }
 );
+
 watch(
   () => page.size,
   () => {
-    page.current = 1
-    emit('changeCurrentPage', page.current, page.size.name)
+    page.current = 1;
+    emit('changeCurrentPage', page.current, page.size.name);
   }
-)
+);
 </script>
 
 <style>
 .pagination-container {
-  @apply gap-2
+  @apply gap-2;
 }
+
 .paginate-buttons {
-  @apply w-8 h-8 rounded flex-center bg-white border border-gray-200 text-sm disabled:border-none disabled:bg-gray-100
+  @apply w-8 h-8 rounded flex-center bg-white border border-gray-200 text-sm disabled:border-none disabled:bg-gray-100;
 }
+
 .paginate-buttons.number-buttons.active-page {
-  @apply text-blue border-blue
+  @apply text-blue border-blue;
 }
 </style>

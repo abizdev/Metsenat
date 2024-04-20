@@ -6,7 +6,9 @@
     <div class="flex flex-col bg-white rounded-xl p-8 w-198 border border-blue-50">
       <!-- title -->
       <div class="flex-y-center justify-between">
-        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">{{ $t('about_sponsor') }}</h3>
+        <h3 class="text-2xl text-black font-bold family-['sf-pro-display']">
+          {{ $t('about_sponsor') }}
+        </h3>
         <BaseButton
           icon="icon-edit"
           :iconLeft="true"
@@ -211,26 +213,28 @@
 </template>
 
 <script setup lang="ts">
-import Banner from '@/components/Layout/Banner.vue';
+import Banner from '@/components/Layout/CBanner.vue';
 import CModal from '@/components/Common/CModal.vue';
-import BaseButton from '@/components/Base/Button.vue';
-import FormInput from '@/components/Form/Input.vue';
-import FormGroup from '@/components/Form/Group.vue';
-import FormSelect from '@/components/Form/Select.vue';
+import BaseButton from '@/components/Base/CButton.vue';
+import FormInput from '@/components/Form/CInput.vue';
+import FormGroup from '@/components/Form/CGroup.vue';
+import FormSelect from '@/components/Form/CSelect.vue';
 
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, reactive, ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 import { formatPhone, formatNumbers } from '@/utils/formatters';
 import { useSponsorsStore } from '@/stores/sponsors';
+
+import type { ISponsor } from '@/types/sposnor.types';
 
 const route = useRoute();
 
 const sponsorsStore = useSponsorsStore();
 const sponsor = computed(() => sponsorsStore.sponsor);
-const loading = computed(() => sponsorsStore.loading)
+const loading = computed(() => sponsorsStore.loading);
 
 const options = {
   status: [
@@ -242,12 +246,12 @@ const options = {
   ],
   amount: [
     { id: Math.random(), name: 'Barchasi' },
-    { id: Math.random(), name: `${formatNumbers(1000000)} UZS`, value: 1000000, },
-    { id: Math.random(), name: `${formatNumbers(5000000)} UZS`, value: 5000000, },
-    { id: Math.random(), name: `${formatNumbers(7000000)} UZS`, value: 7000000, },
+    { id: Math.random(), name: `${formatNumbers(1000000)} UZS`, value: 1000000 },
+    { id: Math.random(), name: `${formatNumbers(5000000)} UZS`, value: 5000000 },
+    { id: Math.random(), name: `${formatNumbers(7000000)} UZS`, value: 7000000 },
     { id: Math.random(), name: `${formatNumbers(10000000)} UZS`, value: 10000000 },
     { id: Math.random(), name: `${formatNumbers(30000000)} UZS`, value: 30000000 },
-    { id: Math.random(), name: `${formatNumbers(50000000)} UZS`, value: 50000000 },
+    { id: Math.random(), name: `${formatNumbers(50000000)} UZS`, value: 50000000 }
   ],
   payment_type: [
     { id: Math.random(), name: 'Click' },
@@ -256,7 +260,7 @@ const options = {
   ]
 };
 
-const form = reactive({
+const form = reactive<any>({
   name: null,
   phone: null,
   status: {
@@ -269,7 +273,7 @@ const form = reactive({
     name: 'Nalichno'
   }
 });
-const formLegal = reactive({
+const formLegal = reactive<any>({
   name: null,
   phone: null,
   status: {
@@ -285,40 +289,41 @@ const formLegal = reactive({
 });
 
 const rules = {
-  name: { required, },
-  phone: { required, },
+  name: { required },
+  phone: { required },
   status: { required },
-  payment_type: { required },
-}
+  payment_type: { required }
+};
 const v$ = {
   form: useVuelidate(rules, form),
-  formLegal: useVuelidate({ ...rules, firm: { required }}, formLegal)
-}
+  formLegal: useVuelidate({ ...rules, firm: { required } }, formLegal)
+};
 
 const submit = () => {
-  const formResult = v$.form.value.$validate()
-  const formLegalResult = v$.formLegal.value.$validate()
+  const formResult = v$.form.value.$validate();
+  const formLegalResult = v$.formLegal.value.$validate();
 
   if (!formResult || !formLegalResult) {
-    return
+    return;
   }
 
   const updatedSponsor = {
     ...sponsor.value,
     full_name: form.name,
     phone: form.phone,
-    sum: form.amount.value,
-  }
+    sum: form.amount.value
+  };
 
-  sponsorsStore.updateSponsor(sponsor.value.id, updatedSponsor)
+  sponsorsStore
+    .updateSponsor(sponsor.value?.id, updatedSponsor)
     .then(() => toggleModalActive(false))
-    .finally(() => sponsorsStore.getSponsorDetail(route.params.id))
-}
+    .finally(() => sponsorsStore.getSponsorDetail(route.params.id));
+};
 
 // form values
 watch(
   () => sponsor,
-  (newVal) => {
+  (newVal: any) => {
     form.name = newVal.value?.full_name;
     form.phone = formatPhone(newVal.value?.phone);
     form.status.name = newVal.value?.get_status_display;
@@ -334,25 +339,25 @@ watch(
 );
 
 // fatch user data
-watch(route.params.id, sponsorsStore.getSponsorDetail(route.params.id), { immediate: true })
+onMounted(() => sponsorsStore.getSponsorDetail(route.params.id));
 
 const showModal = ref<boolean>(false);
-const toggleModalActive = (val: boolean) => (showModal.value = val);
+const toggleModalActive = (val: boolean) => {
+  resetModal();
 
-// const selectLegalStatus = ref()
-// const selectLegalSponsorship = ref()
-// const selectLegalPaymentType = ref()
-// const selectStatus = ref()
-// const selectSponsorship = ref()
-// const selectPaymentType = ref()
-// const contentCLick = () => {
-//   console.log(selectLegalStatus)
-//   selectLegalStatus.value.closeOnOuterClick(event)
-  // selectLegalSponsorship.value.closeOnOuterClick(event)
-  // selectLegalPaymentType.value.closeOnOuterClick(event)
-  // selectStatus.value.closeOnOuterClick(event)
-  // selectSponsorship.value.closeOnOuterClick(event)
-  // selectPaymentType.value.closeOnOuterClick(event)
-// }
+  showModal.value = val;
+};
 
+const resetModal = () => {
+  form.name = sponsor.value?.full_name;
+  form.phone = formatPhone(sponsor.value?.phone);
+  form.status.name = sponsor.value?.get_status_display;
+  form.amount.name = `${formatNumbers(sponsor.value?.sum)} UZS`;
+
+  formLegal.name = sponsor.value?.full_name;
+  formLegal.phone = formatPhone(sponsor.value?.phone);
+  formLegal.status.name = sponsor.value?.get_status_display;
+  formLegal.amount.name = `${formatNumbers(sponsor.value?.sum)} UZS`;
+  formLegal.firm = sponsor.value?.firm;
+};
 </script>

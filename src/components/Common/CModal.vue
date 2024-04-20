@@ -1,7 +1,11 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div class="bg-black/80 fixed top-0 left-0 w-screen h-screen z-50 flex-center" @click="closeModal" v-if="show">
+      <div
+        class="bg-black/80 fixed top-0 left-0 w-screen h-screen z-50 flex-center"
+        @click="closeModal"
+        v-if="show"
+      >
         <div class="flex flex-col gap-y-7 max-w-146.5 w-full bg-white rounded-xl p-7" @click.stop>
           <!-- title -->
           <div class="flex-y-center justify-between px-1 pb-7 border-b border-b-gray-200">
@@ -28,42 +32,41 @@
 import { watch, onMounted } from 'vue';
 
 interface Props {
-  title: string,
-  show: boolean,
+  title: string;
+  show: boolean;
 }
 interface Emits {
-  (e: 'close', value: boolean): void,
+  (e: 'close', value: boolean): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   show: false
-})
-const emit = defineEmits<Emits>()
+});
+const emit = defineEmits<Emits>();
 
 const closeModal = () => {
-  emit('close', false)
-}
+  emit('close', false);
+};
 
 onMounted(() => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      emit('close', false)
+      emit('close', false);
     }
-  })
-})
+  });
+});
 
 watch(
   () => props.show,
-  () => { 
+  () => {
     if (props.show) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.removeAttribute('style')
+      document.body.removeAttribute('style');
     }
   },
-  { immediate: true, }
-)
-
+  { immediate: true }
+);
 </script>
 
 <style scoped>

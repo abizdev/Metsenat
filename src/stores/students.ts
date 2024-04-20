@@ -5,9 +5,9 @@ import { ref } from 'vue';
 import useApi from '@/plugins/axios';
 
 export const useStudentsStore = defineStore('students', () => {
-  const studentsList = ref(null);
-  const studentSponsors = ref(null);
-  const student = ref(null);
+  const studentsList = ref();
+  const studentSponsors = ref();
+  const student = ref();
   const loading = ref<boolean>(false);
 
   const getStudentsList = async (page: number = 1, limit: number = 10) => {
@@ -19,7 +19,7 @@ export const useStudentsStore = defineStore('students', () => {
     }
   };
 
-  const getStudentDetail = async (id: string) => {
+  const getStudentDetail = async (id: any) => {
     try {
       const res = await useApi.get(`/student-detail/${id}`);
       student.value = res.data;
@@ -28,7 +28,7 @@ export const useStudentsStore = defineStore('students', () => {
     }
   };
 
-  const getStudentSponsors = async (id: string) => {
+  const getStudentSponsors = async (id: string | string[]) => {
     try {
       const res = await useApi.get(`/student-sponsor/${id}`);
       studentSponsors.value = res.data.sponsors;
